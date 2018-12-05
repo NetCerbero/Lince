@@ -16,6 +16,7 @@
   <link href="vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+  @yield('style')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
@@ -35,27 +36,24 @@
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown">
         <a class="nav-link nav-link pr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="img-avatar" src="{{ asset('images/avatars/8.jpg') }}" alt="admin@bootstrapmaster.com">
+            <img class="img-avatar" src="{{ asset('images/avatars/8.jpg') }}" alt="profile.pjg">
         </a>
         <div class="dropdown-menu dropdown-menu-right mr-1">
             <div class="dropdown-header text-center">
-                <strong>Luis Yerko</strong>
+                <strong>{{ Auth::user()->name }}</strong>
             </div>
             <a class="dropdown-item" href="#">
                 <i class="fa fa-user"></i> Perfil
             </a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fa fa-lock"></i> Cerrar sesión
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </a>
         </div>
     </li>
 </ul>
-  {{-- <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
-  <span class="navbar-toggler-icon"></span>
-  </button>
-  <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
-  <span class="navbar-toggler-icon"></span>
-  </button> --}}
 </header>
 <div class="app-body">
     <div class="sidebar">
@@ -150,19 +148,46 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-title">Administración</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuario.index') }}">
+                        <i class="nav-icon icon-puzzle"></i> Gestionar usuario
+                    </a>
+                    {{-- <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" href="base/breadcrumb.html">
+                                <i class="nav-icon icon-puzzle"></i> Peliculas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="base/cards.html">
+                                <i class="nav-icon icon-puzzle"></i> Series</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="base/carousel.html">
+                                <i class="nav-icon icon-puzzle"></i> Documentales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="base/collapse.html">
+                                <i class="nav-icon icon-puzzle"></i> Videos musicales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="base/jumbotron.html">
+                                <i class="nav-icon icon-puzzle"></i> Series de television</a>
+                        </li> --}}
+                    </ul>
+                </li>
             </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
     <main class="main">
 
-        <div class="breadcrumb">
-          
-            
+        <div class="breadcrumb d-flex justify-content-center">
+          @yield('title')
         </div>
         <div class="container-fluid">
             <div id="ui-view">
-               <h2>asdsa</h2>
+              @yield('content')
             </div>
         </div>
     </main>
@@ -178,5 +203,6 @@
   <script src="vendors/pace-progress/js/pace.min.js"></script>
   <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
   <script src="vendors/%40coreui/coreui-pro/js/coreui.min.js"></script>
+  @yield('script')
 </body>
 </html>

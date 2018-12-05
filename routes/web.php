@@ -12,6 +12,7 @@
 */
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('/panel','PanelController');
+    Route::resource('/usuario','UsuarioController');
 });
 
 Auth::routes();
