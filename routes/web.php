@@ -13,6 +13,10 @@
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('/panel','PanelController');
     Route::resource('/usuario','UsuarioController');
+    Route::resource('/contenido','ContentController');
+    Route::resource('/upload','UploadMediaController');
+    Route::get('/viewupload/{id}/{type}','UploadMediaController@uploadView')->name('uploadnotification');
+    Route::resource('/serie','ContentSerieController');
 });
 
 Auth::routes();

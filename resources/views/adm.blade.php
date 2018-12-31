@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,12 +9,12 @@
   <meta name="author" content="Łukasz Holeczek">
   <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
   <title>Lince</title>
-  <link href="vendors/%40coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
-  <link href="vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
-  <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
-  <link href="vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+  <link href="{{ asset('vendors/%40coreui/icons/css/coreui-icons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendors/flag-icon-css/css/flag-icon.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendors/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendors/pace-progress/css/pace.min.css') }}" rel="stylesheet">
   @yield('style')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -36,7 +35,11 @@
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown">
         <a class="nav-link nav-link pr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="img-avatar" src="{{ asset('images/avatars/8.jpg') }}" alt="profile.pjg">
+            @if (Auth::user()->photo)
+                <img class="img-avatar" src="{{ asset('images/profile/').Auth()->photo }}" alt="profile.pjg">
+            @else
+                <img class="img-avatar" src="{{ asset('images/profile/default.png') }}" alt="profile.pjg">
+            @endif
         </a>
         <div class="dropdown-menu dropdown-menu-right mr-1">
             <div class="dropdown-header text-center">
@@ -71,24 +74,12 @@
                         <i class="nav-icon icon-puzzle"></i> Gestionar contenido</a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link" href="base/breadcrumb.html">
-                                <i class="nav-icon icon-puzzle"></i> Peliculas</a>
+                            <a class="nav-link" href="{{ route('contenido.index') }}">
+                                <i class="nav-icon icon-puzzle"></i> Otros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="base/cards.html">
                                 <i class="nav-icon icon-puzzle"></i> Series</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="base/carousel.html">
-                                <i class="nav-icon icon-puzzle"></i> Documentales</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="base/collapse.html">
-                                <i class="nav-icon icon-puzzle"></i> Videos musicales</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="base/jumbotron.html">
-                                <i class="nav-icon icon-puzzle"></i> Series de television</a>
                         </li>
                     </ul>
                 </li>
@@ -186,9 +177,7 @@
           @yield('title')
         </div>
         <div class="container-fluid">
-            <div id="ui-view">
-              @yield('content')
-            </div>
+            @yield('content')
         </div>
     </main>
 </div>
@@ -197,12 +186,13 @@
         <span>© 2018 BlueNet</span>
     </div>
 </footer>
-  <script src="vendors/jquery/js/jquery.min.js"></script>
-  <script src="vendors/popper.js/js/popper.min.js"></script>
-  <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
-  <script src="vendors/pace-progress/js/pace.min.js"></script>
-  <script src="vendors/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
-  <script src="vendors/%40coreui/coreui-pro/js/coreui.min.js"></script>
+  {{-- <script src="vendors/jquery/js/jquery.min.js"></script> --}}
+  <script src="{{ asset('vendors/cdn_datatable/jquery-3.3.1.js') }}"></script>
+  <script src="{{ asset('vendors/popper.js/js/popper.min.js') }}"></script>
+  <script src="{{ asset('vendors/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('vendors/pace-progress/js/pace.min.js') }}"></script>
+  <script src="{{ asset('vendors/perfect-scrollbar/js/perfect-scrollbar.min.js') }}"></script>
+  <script src="{{ asset('vendors/%40coreui/coreui-pro/js/coreui.min.js') }}"></script>
   @yield('script')
 </body>
 </html>
