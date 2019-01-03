@@ -26,6 +26,7 @@ class CreateOthersTable extends Migration
             $table->foreign('episode_id')->references('id')->on('episodes');
             $table->foreign('subtitles_id')->references('id')->on('languages');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

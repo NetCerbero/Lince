@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Genre;
+use App\Country;
+use App\Content;
+use DB;
 
 class ContentSerieController extends Controller
 {
@@ -12,8 +16,9 @@ class ContentSerieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $series = [];
+    {        
+        $series = COntent::all()->whereIn('type',['4','5']);
+        $pathDefault = DefaultVariable::pathCoverVideo;
         return view('Contenido.Series.index',compact('series'));
     }
 
@@ -24,7 +29,9 @@ class ContentSerieController extends Controller
      */
     public function create()
     {
-        //
+        $genero = Genre::all()->where('type',1);
+        $country = Country::all();
+        return view('Contenido.Series.create',compact('genero','country'));
     }
 
     /**
@@ -35,7 +42,16 @@ class ContentSerieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->hasFile('file')){
+            $path = Storage::putFile('public/content/cover', $request->file('file'));
+            $request['cover'] = $path;
+        }else{
+            $path = DefaultVariable::pathCoverVideo;
+        }
+        $content = Content::create($request->all());
+        $content->genres()->attach($request['genre']);
+        $type = 'series';
+        return redirect()->route('serie.index')->with("info",["msg"=>"Se ha registrado exitosamente.","action"=>route('uploadnotification',['id'=>$content->id,'type'=>$type]),'name'=>$content->name,'img'=> Storage::url($path)]);
     }
 
     /**

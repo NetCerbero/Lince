@@ -15,6 +15,12 @@
   <link href="{{ asset('vendors/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('vendors/pace-progress/css/pace.min.css') }}" rel="stylesheet">
+  <style>
+    .content-body{
+      background: #fff;
+      padding: 20px;
+    }
+  </style>
   @yield('style')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -63,7 +69,7 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="main.html">
+                    <a class="nav-link" href="{{ route('panel.index') }}">
                         <i class="nav-icon icon-speedometer"></i> Inicio
                         {{-- <span class="badge badge-info">NEW</span> --}}
                     </a>
@@ -75,15 +81,17 @@
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contenido.index') }}">
-                                <i class="nav-icon icon-puzzle"></i> Otros</a>
+                                <i class="nav-icon icon-puzzle"></i> Otros
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="base/cards.html">
-                                <i class="nav-icon icon-puzzle"></i> Series</a>
+                            <a class="nav-link" href="{{ route('serie.index') }}">
+                                <i class="nav-icon icon-puzzle"></i> Series
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item nav-dropdown">
+                {{-- <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="nav-icon icon-cursor"></i> Buttons</a>
                     <ul class="nav-dropdown-items">
@@ -138,7 +146,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-title">Administración</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuario.index') }}">
@@ -164,8 +172,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="base/jumbotron.html">
                                 <i class="nav-icon icon-puzzle"></i> Series de television</a>
-                        </li> --}}
-                    </ul>
+                        </li> 
+                    </ul>--}}
                 </li>
             </ul>
         </nav>

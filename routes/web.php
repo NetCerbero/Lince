@@ -17,13 +17,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/upload','UploadMediaController');
     Route::get('/viewupload/{id}/{type}','UploadMediaController@uploadView')->name('uploadnotification');
     Route::resource('/serie','ContentSerieController');
+    Route::resource('/other','OtherController');
 });
 
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-
-// Route::get('/user',function(){
+Route::get('/play/movie/{id}/{name?}','PlayContentController@playContent')->name('playcontent');
+Route::get('/movie/all','HomeController@allMovie')->name('allmovie');
+Route::get('/movie/{id}/genero/{name?}','HomeController@movieByGenre')->name('movieGenre');
+Route::get('/documentary','HomeController@allDocumentary')->name('alldocumentary');
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';

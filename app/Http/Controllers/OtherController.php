@@ -44,7 +44,7 @@ class OtherController extends Controller
      * @param  \App\Other  $other
      * @return \Illuminate\Http\Response
      */
-    public function show(Other $other)
+    public function show($id)
     {
         //
     }
@@ -55,7 +55,7 @@ class OtherController extends Controller
      * @param  \App\Other  $other
      * @return \Illuminate\Http\Response
      */
-    public function edit(Other $other)
+    public function edit($id)
     {
         //
     }
@@ -67,9 +67,9 @@ class OtherController extends Controller
      * @param  \App\Other  $other
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Other $other)
+    public function update(Request $request, $id)
     {
-        //
+        Other::findOrFail($id)->update($request->all());
     }
 
     /**
@@ -78,8 +78,8 @@ class OtherController extends Controller
      * @param  \App\Other  $other
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Other $other)
+    public function destroy($id)
     {
-        //
+        Other::findOrFail($id)->delete();
     }
 }

@@ -9,6 +9,6 @@ class Language extends Model
     protected $fillable = ['language'];
 
     public function others(){
-    	// $this->hasMany()
+    	$this->hasMany(Other::class,'language_id','id');
     }
 }

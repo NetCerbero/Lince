@@ -223,7 +223,7 @@
                     <!-- Classy Menu -->
                     <nav class="classy-navbar justify-content-between">
                         <!-- Subscribe btn -->
-                        <a class="subscribe-btn">
+                        <a href="{{ route('home') }}" class="subscribe-btn">
                                 <img class="logo-lince" src="{{ asset('images/logo.svg') }}" alt="">
                         </a>
 
@@ -242,22 +242,22 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="menu-main"><a href="index.html">Inicio</a></li>
+                                    <li class="menu-main"><a href="{{ route('home') }}">Inicio</a></li>
                                     <li class="menu-main"><a href="#">Peliculas</a>
                                         <ul class="dropdown">
-                                            <li><a href="accion.html">Accion</a></li>
-                                            <li><a href="aventura.html">Aventura</a></li>
-                                            <li><a href="comedia.html">Comedia</a></li>
-                                            
-                                            <li><a href="drama.html">Drama</a></li>
-                                            <li><a href="hechos.html">Hechos reales</a></li>
-                                            <li><a href="infantil.html">Infantil</a></li>
+                                            @php
+                                                $genres = App\Genre::all()->where('type',1);
+                                            @endphp
+                                            @foreach ($genres as $item)
+                                                <li><a href="{{ route('movieGenre',['id'=>$item->id,'name'=>$item->name]) }}">{{ $item->name }}</a></li>
+                                            @endforeach
+                                            <li><a href="{{ route('allmovie') }}">Todos</a></li>
                                         </ul>
                                     </li>
                                     
-                                    <li class="menu-main"><a href="documental.html">Series</a></li>
-                                    <li class="menu-main"><a href="documental.html">Documentales</a></li>
-                                    <li class="menu-main"><a href="#">Musica</a></li>
+                                    <li class="menu-main"><a href="#!">Series</a></li>
+                                    <li class="menu-main"><a href="{{ route('alldocumentary') }}">Documentales</a></li>
+                                    <li class="menu-main"><a href="#!">Musica</a></li>
                                 </ul>
 
                                 <!-- Search Form  -->
@@ -284,7 +284,7 @@
     <!-- ##### Hero Area End ##### -->
 
     <!-- ##### Blog Wrapper Start ##### -->
-    <div class="blog-wrapper section-padding-50 clearfix">
+    <div class="blog-wrapper py-4 clearfix">
         @yield('content')        
     </div>
     <!-- ##### Blog Wrapper End ##### -->
@@ -295,69 +295,29 @@
             <div class="row">
                 <div class="col-12">
                     <div class="insta-title">
-                        <h5>Recomendados</h5>
+                        <h5>Contenidos más vistos en Lince</h5>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Instagram Slides -->
         <div class="instagram-slides owl-carousel">
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/1.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r1.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
+            @php
+                $lastMovie = App\Content::all()->whereIn('type',[1,2,3])->sortByDesc('view')->take(12);
+            @endphp
+            @foreach ($lastMovie as $item)
+                <div class="single-insta-feed">
+                    @if ($item->cover)
+                        <img src="{{ Storage::url($item->cover) }}" alt="">
+                    @else
+                        <img src="{{ Storage::url($item->defaultVariable()['cover']) }}" alt="">
+                    @endif
+                    <!-- Hover Effects -->
+                    <div class="hover-effects">
+                        <a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
+                    </div>
                 </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/2.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r2.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/3.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r3.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/4.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r4.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/5.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r5.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/6.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r6.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
-            <!-- Single Insta Feed -->
-            <div class="single-insta-feed">
-                <img src="img/instagram-img/7.png" alt="">
-                <!-- Hover Effects -->
-                <div class="hover-effects">
-                    <a href="r7.html" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <!-- ##### Instagram Feed Area End ##### -->

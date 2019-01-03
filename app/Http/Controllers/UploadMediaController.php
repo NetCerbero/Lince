@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Language;
 use App\Other;
+use App\Episode;
 class UploadMediaController extends Controller
 {
     /**
@@ -31,8 +32,14 @@ class UploadMediaController extends Controller
     }
 
     public function uploadView($id, $type){
-        $languages = $this->generateOptionIdioma();//Language::all();
-        return view('Contenido.Otros.upload',compact('id','languages','type'));
+        $languages = $this->generateOptionIdioma();
+        if($type === 'others'){
+            return view('Contenido.Otros.upload',compact('id','languages','type'));
+        }elseif ($type === 'series') {
+            $rango = range(1,200);
+            return view('Contenido.Series.upload',compact('id','languages','type','rango'));
+        }
+        abort(404);
     }
     /**
      * Show the form for creating a new resource.
@@ -55,11 +62,14 @@ class UploadMediaController extends Controller
         if($request->hasFile('file')){
             $request['extension'] = $request->file('file')->getClientOriginalExtension();
             $request['path'] = Storage::putFile('public/content/multimedia', $request->file('file'));
-            $request['language_id'] = $request['language'];
+            // $request['language_id'] = $request['language'];
             if($request['content_type'] == 'others'){
                 $request['content_id'] = $request['id'];
-            }else{
-                $request['episode_id'] = $request['id'];
+            }elseif($request['content_type'] == 'series'){
+                $request['content_id'] = $request['id'];
+                $episode = Episode::create($request->all());
+                $request['episode_id'] = $episode->id;
+                $request['content_id'] = null;
             }
             Other::create($request->all());
         }

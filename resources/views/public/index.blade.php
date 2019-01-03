@@ -86,16 +86,20 @@
         <!-- Hero Slides Area -->
     <div class="hero-slides owl-carousel">
     	@foreach ($movie as $item)
-        	<div class="single-hero-slide bg-img" style="background-image: url({{ Storage::url($item->cover)}});">
+            @if ($item->cover)
+                <div class="single-hero-slide bg-img" style="background-image: url({{ Storage::url($item->cover)}});">
+            @else
+                <div class="single-hero-slide bg-img" style="background-image: url({{ Storage::url($default)}});">
+            @endif
 	            <div class="container h-100">
 	                <div class="row h-100 align-items-center">
 	                    <div class="col-12">
 	                        <div class="slide-content text-center">
 	                            <div class="post-tag">
-	                                <a href="#!" data-animation="fadeInUp">Disfruta tu viaje con el mejor entretenimiento</a>
+	                                <a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" data-animation="fadeInUp">Disfruta tu viaje con el mejor entretenimiento</a>
 	                            </div>
 	                            {{-- <h2 data-animation="fadeInUp" data-delay="250ms"><a href="#!">con el mejor entretenimiento</a></h2> --}}
-                                <h2 data-animation="fadeInUp" data-delay="250ms"><a href="#!">{{ $item->name }}</a></h2>
+                                <h2 data-animation="fadeInUp" data-delay="250ms"><a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}">{{ $item->name }}</a></h2>
 	                        </div>
 	                    </div>
 	                </div>
@@ -112,62 +116,28 @@
 	</div>
     <div class="row mx-0">
         <!-- Single Blog Area -->
-        @foreach ($movie as $item)
+        @foreach ($lastMovies as $item)
         	<div class="col-6 col-md-4 col-xl-3 p-0 container-movie">
         		<p class="title-movie m-0">
         			{{ $item->name }}
         		</p>
         		<div class="last-movie">
-        			<img src="{{ Storage::url($item->cover) }}" alt="">
+                    @if ($item->cover)
+                        <img src="{{ Storage::url($item->cover) }}" alt=""> 
+                    @else
+                        <img src="{{ Storage::url($default) }}" alt="">
+                    @endif
         		</div>
         		<div class="movie-efecto">
-        			<a href="" class="d-flex align-items-center justify-content-center">
+        			<a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center">
         				<i class="fa fa-play d-none"></i>
         			</a>
         		</div>
 	        </div>
         @endforeach
         
-        <!-- Single Blog Area -->
+        
         {{-- <div class="col-6 col-md-4 col-xl-3">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/aventura.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="aventura.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Aventura</i></a>
-                  
-                </div>
-            </div>
-        </div>
-        <!-- Single Blog Area -->
-        <div class="col-6 col-md-4 col-xl-3">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/comedia.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="comedia.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Comedia</i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl-3">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/comedia.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="comedia.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Comedia</i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl-3">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/comedia.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="comedia.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Comedia</i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl-3">
             <div class="single-catagory-area clearfix mb-100">
                 <img src="img/blog-img/comedia.jpg" alt="">
                 <!-- Catagory Title -->
@@ -178,41 +148,6 @@
         </div> --}}
     </div>
 </div>
-        
-{{-- <div class="container">
-    <div class="row align-items-end">
-        <!-- Single Blog Area -->
-        <div class="col-12 col-xs-6 col-sm-4">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/drama.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="drama.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Drama</i></a>
-                </div>
-            </div>
-        </div>
-        <!-- Single Blog Area -->
-        <div class="col-12 col-xs-6 col-sm-4">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/hechos.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="hechos.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Basada en Hechos reales</i></a>
-                </div>
-            </div>
-        </div>
-        <!-- Single Blog Area -->
-        <div class="col-12 col-xs-6 col-sm-4">
-            <div class="single-catagory-area clearfix mb-100">
-                <img src="img/blog-img/infantil.jpg" alt="">
-                <!-- Catagory Title -->
-                <div class="catagory-title">
-                    <a href="infantil.html" data-toggle="tooltip" data-placement="bottom" title="Mostrar peliculas"><i class="fa fa-play" aria-hidden="true"> Infantil</i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 @endsection
 
 @section('script')

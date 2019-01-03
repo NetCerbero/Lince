@@ -17,8 +17,8 @@ class CreateEpisodesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('season');
             $table->text('description_episode')->nullable();
-            $table->date('redate');
-            $table->string('name_episode');
+            $table->date('redate')->nullable();
+            $table->string('name_episode')->nullable();
             $table->integer('episode');
             $table->bigInteger('view')->default(0);
             $table->unsignedInteger('content_id');
