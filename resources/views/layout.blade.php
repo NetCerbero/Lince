@@ -23,8 +23,14 @@
     <link href="{{ asset('css/style_main.css') }}" rel="stylesheet">
     <style>
         .logo-lince{
-            height: 10em;
-            width: 15em;
+            height: 100%;
+            width: 100%;
+            transform: scale(1.5);
+        }
+        .container-logo{
+            height: 100%;
+            overflow: hidden;
+            width: 200px;
         }
         .menu-main:hover{
             border-bottom: 3px solid #f4645f;
@@ -65,7 +71,7 @@
             -webkit-transform-style: preserve-3d;
         }
         .header-area .original-nav-area .classy-nav-container{
-            overflow: hidden !important;
+            /*overflow: hidden !important;*/
         }
         @media (min-width: 576px) {
             .top-social-area a{
@@ -226,7 +232,7 @@
                     <!-- Classy Menu -->
                     <nav class="classy-navbar justify-content-between">
                         <!-- Subscribe btn -->
-                        <a href="{{ route('home') }}" class="subscribe-btn">
+                        <a href="{{ route('home') }}" class="subscribe-btn container-logo">
                                 <img class="logo-lince" src="{{ asset('images/logo.svg') }}" alt="">
                         </a>
 
