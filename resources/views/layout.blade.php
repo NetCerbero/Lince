@@ -64,6 +64,9 @@
             height: 270px;
             -webkit-transform-style: preserve-3d;
         }
+        .header-area .original-nav-area .classy-nav-container{
+            overflow: hidden !important;
+        }
         @media (min-width: 576px) {
             .top-social-area a{
                 font-size: 48px;
