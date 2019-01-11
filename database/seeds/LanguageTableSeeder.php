@@ -25,6 +25,6 @@ class LanguageTableSeeder extends Seeder
         Language::create(['language'=>'Guaraní']);
         Language::create(['language'=>'Ruso']);
         Language::create(['language'=>'Árabe']);
-        Language::create(['language'=>'Hindi1']);
+        Language::create(['language'=>'Hindi']);
     }
 }

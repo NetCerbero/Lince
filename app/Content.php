@@ -22,6 +22,10 @@ class Content extends Model
     	return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function episodes(){
+        return $this->hasMany(Episode::class,'content_id','id');
+    }
+
     public function defaultVariable(){
         return ['cover'=>DefaultVariable::pathCoverVideo,'content'=>DefaultVariable::pathContentVideo];
     }

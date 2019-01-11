@@ -117,7 +117,7 @@
 			</div>
 			<div class="d-flex justify-content-end mr-3 mr-sm-0">
 				<a href="{{ route('contenido.index') }}" class="btn btn-danger mr-2">Cancelar</a>
-				<button class="submit btn btn-primary" type="submit" id="register-submit">Registrar</button>
+				<button class="submit btn btn-primary" type="submit" id="register-submit">Actualizar</button>
 			</div>
 		</form>
 	</div>
@@ -125,12 +125,15 @@
 		<table id="multimedia" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 					<thead>
 						<tr>
-							<th>Directorio</th>
+							<th>Media</th>
 							<th>Idioma</th>
 							<th>Acción</th>
 						</tr>
 					</thead>
 					<tbody>
+						@php
+							$id = 0;
+						@endphp
 						@foreach ($content->others as $item)
 							<tr data-id={{ $item->id }}>
 								<td>
@@ -154,10 +157,13 @@
 								</td>
 								<td>
 									<div class="d-flex justify-content-center">
-										<a href="#!" class="eliminarOther btn btn-danger"><i class="fa fa-trash"></i></a>
+										<a href="#!" class="eliminarOther btn btn-danger" data-id="{{ $item->id }}" data-row={{ $id }}><i class="fa fa-trash"></i></a>
 									</div>
 								</td>
 							</tr>
+							@php
+								$id++;
+							@endphp
 						@endforeach
 					</tbody>
 	</table>
@@ -193,8 +199,9 @@
 	    $('#multimedia').on('click','tbody tr .eliminarOther',function(){
 	    	let url = "{{ route('other.destroy',':ID') }}";
 			let token = "{{ csrf_token() }}";
-		  	let row = $(this).parents('tr');
-		  	url = url.replace(':ID',row[0].dataset.id);
+		  	let id = $(this)[0].dataset.id;
+		  	let row = $(this)[0].dataset.row;
+		  	url = url.replace(':ID',id);
 		  	console.log(url);
 	    	console.log(this);
 	    	console.log(this.value);

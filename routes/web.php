@@ -17,6 +17,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/upload','UploadMediaController');
     Route::get('/viewupload/{id}/{type}','UploadMediaController@uploadView')->name('uploadnotification');
     Route::resource('/serie','ContentSerieController');
+    Route::get('/serie/data/{id}','ContentSerieController@getData')->name('serieData');
+    Route::post('/serie/data/set/{id}','ContentSerieController@setData')->name('serieDataUpdate');
     Route::resource('/other','OtherController');
 });
 
@@ -27,6 +29,14 @@ Route::get('/play/movie/{id}/{name?}','PlayContentController@playContent')->name
 Route::get('/movie/all','HomeController@allMovie')->name('allmovie');
 Route::get('/movie/{id}/genero/{name?}','HomeController@movieByGenre')->name('movieGenre');
 Route::get('/documentary','HomeController@allDocumentary')->name('alldocumentary');
+Route::get('/serie/all/lince','HomeController@allSerie')->name('allseries');
+Route::get('/serie/season/{id}/{name?}','HomeController@serieSeason')->name('seasonSerie');
+// Route::get('/serie/season/{id}/cap/{cap}')
+// select * from episodes 
+// where ( 
+//         episode = IFNULL((select min(episode) from episodes where episode > 4),0) 
+//         or  episode = IFNULL((select max(episode) from episodes where episode < 4),0)
+//       ) and season = 1;
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';

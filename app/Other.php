@@ -17,4 +17,8 @@ class Other extends Model
     public function content(){
     	return $this->belongsTo(Content::class,'content_id');
     }
+
+    public function episode(){
+    	return $this->belongsTo(Episode::class,'episode_id');
+    }
 }

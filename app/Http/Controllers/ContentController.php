@@ -108,6 +108,7 @@ class ContentController extends Controller
         $content = Content::findOrFail($id);
         $content->update($request->all());
         $content->genres()->sync($request['genre']);
+        return redirect()->route('contenido.index');
         // public/content/cover/FZzKgPXlvoSmM29qzRwZHYeeDD6LPKQefaKpACme.jpeg
     }
 

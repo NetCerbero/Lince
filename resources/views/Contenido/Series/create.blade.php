@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="content-body">
-	<form action="{{ route('contenido.store') }}" method="POST" class="form" id="register-form" enctype="multipart/form-data" novalidate>
+	<form action="{{ route('serie.store') }}" method="POST" class="form" id="register-form" enctype="multipart/form-data" novalidate>
 		@CSRF
 		<div class="row">
 			<div class="col-12 col-md-4">
@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<div class="d-flex justify-content-end mr-3 mr-sm-0">
-			<a href="{{ route('contenido.index') }}" class="btn btn-danger mr-2">Cancelar</a>
+			<a href="{{ route('serie.index') }}" class="btn btn-danger mr-2">Cancelar</a>
 			<button class="submit btn btn-primary" type="submit" id="register-submit">Registrar</button>
 		</div>
 	</form>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Content;
 use App\Genre;
+use DB;
 use App\Http\Controllers\DefaultVariable;
 class HomeController extends Controller
 {
@@ -34,19 +35,31 @@ class HomeController extends Controller
     public function allMovie(){
         $title = "Todas las películas";
         $movies = Content::where('type', 1)->paginate(12);
-        return view('public.allmovie',compact('movies','title'));
+        return view('Public.allmovie',compact('movies','title'));
     }
 
     public function movieByGenre($id, $name=null){
         $genre = Genre::findOrFail($id);
         $movies = $genre->contents()->whereIn('type',[1,2,3])->paginate(12);
         $title = $genre->name;
-        return view('public.allmovie',compact('movies','title'));
+        return view('Public.allmovie',compact('movies','title'));
     }
 
     public function allDocumentary(){
         $title = "Documentales";
         $movies = Content::where('type', 2)->paginate(12);
-        return view('public.allmovie',compact('movies','title'));
+        return view('Public.allmovie',compact('movies','title'));
+    }
+
+    public function allSerie(){
+        $series = Content::whereIn('type',[4,5])->paginate(12);
+        $title = "Todas las series";
+        return view('Public.allserie',compact('series','title'));
+    }
+
+    public function serieSeason($id, $name=null){
+        $movie = Content::findOrFail($id);
+        $temporadas = DB::table('episodes')->select('season')->where('content_id',$id)->groupBy('season')->get()->toArray();
+        return view('Public.season',compact('movie','temporadas'));
     }
 }

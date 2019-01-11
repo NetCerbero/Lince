@@ -56,20 +56,18 @@
         			@else
         				<td width="6%"><img src='{{ Storage::url($pathDefault) }}' class="img-fluid" style="height: 35px; width: 100%;"/></td>
         			@endif
-        			@if ($item->type == 1)
-        				<td>Película</td>
-        			@elseif($item->type == 2)
-        				<td>Documental</td>
+        			@if ($item->type == 4)
+        				<td>Serie (variado)</td>
         			@else
-        				<td>Video musical</td>
+        				<td>Telenovela</td>
         			@endif
 					<td>{{ $item->redate }}</td>
 					<td>{{ $item->view }}</td>
 					<td>
 						<div class="d-flex justify-content-center">
 							<a href="{{ route('uploadnotification',['id'=>$item->id,'type'=>'series']) }}" class="btn btn-outline-dark mr-1"><i class="fa fa-upload"></i></a>
-							<a href="{{ route('contenido.show',$item->id) }}" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
-							<a href="{{ route('contenido.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
+							<a href="{{ route('serie.show',$item->id) }}" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
+							<a href="{{ route('serie.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
 							<a href="#!" class="btn btn-outline-danger eliminarRegistro" {{-- onclick="Eliminar(this)" --}}><i class="fa fa-trash"></i></a>
 						</div>
 					</td>

@@ -23,7 +23,7 @@ class CreateOthersTable extends Migration
             $table->unsignedInteger('episode_id')->nullable();
             $table->foreign('language_id')->references('id')->on('languages');
             $table->foreign('content_id')->references('id')->on('contents');
-            $table->foreign('episode_id')->references('id')->on('episodes');
+            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('cascade');
             $table->foreign('subtitles_id')->references('id')->on('languages');
             $table->timestamps();
             $table->softDeletes();

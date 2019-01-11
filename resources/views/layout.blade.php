@@ -264,7 +264,7 @@
                                         </ul>
                                     </li>
                                     
-                                    <li class="menu-main"><a href="#!">Series</a></li>
+                                    <li class="menu-main"><a href="{{ route('allseries') }}">Series</a></li>
                                     <li class="menu-main"><a href="{{ route('alldocumentary') }}">Documentales</a></li>
                                     <li class="menu-main"><a href="#!">Musica</a></li>
                                 </ul>
