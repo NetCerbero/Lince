@@ -163,7 +163,7 @@
 							@endphp
 						@endforeach
 					</tbody>
-	</table>
+		</table>
 	</div>
 
 	<div class="modal fade" id="editEpisode" tabindex="-1" role="dialog" aria-labelledby="episodeModalLabel" aria-hidden="true">

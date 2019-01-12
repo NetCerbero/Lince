@@ -68,7 +68,7 @@
     <div class="d-flex justify-content-center mt-3">
         @if (count($temporadas))
             @foreach ($temporadas as $tem)
-                <a href="#" class="badge badge-dark season mr-1">Temporada {{ $tem->season }}</a>
+                <a href="{{ route('playSerie',['id'=>$movie->id,'nSeason'=> $tem->season,'cap'=> $tem->cap,'name'=>$movie->name]) }}" class="badge badge-dark season mr-1">Temporada {{ $tem->season }}</a>
             @endforeach
         @else
             <div class="alert alert-info" role="alert">

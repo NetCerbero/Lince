@@ -20,6 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/serie/data/{id}','ContentSerieController@getData')->name('serieData');
     Route::post('/serie/data/set/{id}','ContentSerieController@setData')->name('serieDataUpdate');
     Route::resource('/other','OtherController');
+    Route::resource('/encuesta');
 });
 
 Auth::routes();
@@ -31,12 +32,7 @@ Route::get('/movie/{id}/genero/{name?}','HomeController@movieByGenre')->name('mo
 Route::get('/documentary','HomeController@allDocumentary')->name('alldocumentary');
 Route::get('/serie/all/lince','HomeController@allSerie')->name('allseries');
 Route::get('/serie/season/{id}/{name?}','HomeController@serieSeason')->name('seasonSerie');
-// Route::get('/serie/season/{id}/cap/{cap}')
-// select * from episodes 
-// where ( 
-//         episode = IFNULL((select min(episode) from episodes where episode > 4),0) 
-//         or  episode = IFNULL((select max(episode) from episodes where episode < 4),0)
-//       ) and season = 1;
+Route::get('/serie/{id}/season/{nSeason}/episode/{cap}/{name?}','PlayContentController@playSerie')->name('playSerie');
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';
