@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/serie/data/{id}','ContentSerieController@getData')->name('serieData');
     Route::post('/serie/data/set/{id}','ContentSerieController@setData')->name('serieDataUpdate');
     Route::resource('/other','OtherController');
-    Route::resource('/encuesta');
+    Route::resource('/encuesta','PollController');
 });
 
 Auth::routes();
