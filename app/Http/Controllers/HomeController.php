@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Content;
 use App\Genre;
 use DB;
+use App\Poll;
 use App\Http\Controllers\DefaultVariable;
 class HomeController extends Controller
 {
@@ -61,5 +62,19 @@ class HomeController extends Controller
         $movie = Content::findOrFail($id);
         $temporadas = DB::table('episodes')->selectRaw('season, min(episode) as cap')->where('content_id',$id)->groupBy('season')->get()->toArray();
         return view('Public.season',compact('movie','temporadas'));
+    }
+
+    public function pollActive($id){
+        $encuesta = Poll::findOrFail($id);
+        if($encuesta->status == "t"){
+            $questions = $encuesta->questions;
+            return view('Public.poll',compact('encuesta','questions'));
+        }else{
+            abort(404);
+        }
+    }
+
+    public function pollSave(Request $request, $id){
+        dd($request);
     }
 }

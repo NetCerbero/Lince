@@ -33,6 +33,9 @@ Route::get('/documentary','HomeController@allDocumentary')->name('alldocumentary
 Route::get('/serie/all/lince','HomeController@allSerie')->name('allseries');
 Route::get('/serie/season/{id}/{name?}','HomeController@serieSeason')->name('seasonSerie');
 Route::get('/serie/{id}/season/{nSeason}/episode/{cap}/{name?}','PlayContentController@playSerie')->name('playSerie');
+Route::get('/poll/{id}/realease','HomeController@pollActive')->name('doPoll');
+
+Route::post('/poll/{id}/response','HomeController@pollSave')->name('savePoll');
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';

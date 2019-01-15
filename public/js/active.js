@@ -71,7 +71,6 @@
         //     autoplayTimeout: 5000, // Autoplay Timeout 1s = 1000ms
         //     smartSpeed: 2000
         // });
-        console.log(welcomeSlide);
         welcomeSlide.on('translate.owl.carousel', function () {
             var slideLayer = $("[data-animation]");
             slideLayer.each(function () {

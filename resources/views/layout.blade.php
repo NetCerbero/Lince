@@ -73,6 +73,9 @@
         .header-area .original-nav-area .classy-nav-container{
             /*overflow: hidden !important;*/
         }
+        .encuesta-menu{
+            width: 300px !important;
+        }
         @media (min-width: 576px) {
             .top-social-area a{
                 font-size: 48px;
@@ -267,6 +270,18 @@
                                     <li class="menu-main"><a href="{{ route('allseries') }}">Series</a></li>
                                     <li class="menu-main"><a href="{{ route('alldocumentary') }}">Documentales</a></li>
                                     <li class="menu-main"><a href="#!">Musica</a></li>
+                                    @php
+                                        $encuesta = App\Poll::all()->where('status','t');
+                                    @endphp
+                                    @if (count($encuesta))
+                                        <li class="menu-main"><a href="#!">Encuesta <span class="badge badge-primary">{{ count($encuesta) }}</span></a>
+                                            <ul class="dropdown encuesta-menu">
+                                                @foreach ($encuesta as $item)
+                                                    <li><a href="{{ route('doPoll',$item->id) }}">{{ $item->title }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @endif
                                 </ul>
 
                                 <!-- Search Form  -->

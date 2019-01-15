@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Poll;
+use App\Type;
+use App\Question;
+use App\Response;
 class PollController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class PollController extends Controller
      */
     public function index()
     {
-        //
+        $encuestas = Poll::all();
+        return view('Encuesta.index',compact('encuestas'));
     }
 
     /**
@@ -22,8 +26,9 @@ class PollController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $types = Type::all();
+        return view('Encuesta.create',compact('types'));
     }
 
     /**
@@ -34,7 +39,20 @@ class PollController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request['user_id'] = Auth()->user()->id;
+        $poll = Poll::create($request->all());
+        foreach($request['questions'] as $item) {
+            $item['poll_id'] = $poll->id;
+            // dd($item);
+            $question = Question::create($item);
+            // dd($question);
+            if($item['type_id']==1){
+                foreach ($item['response'] as $rsp) {
+                    Response::create(['response'=>$rsp, 'question_id'=>$question->id]);
+                }
+            }
+        }
+        return redirect()->route('encuesta.index');
     }
 
     /**
@@ -43,9 +61,11 @@ class PollController extends Controller
      * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function show(Genre $genre)
+    public function show($id)
     {
-        //
+        $encuesta = Poll::findOrFail($id);
+        $questions = $encuesta->questions;
+        return view('Encuesta.show',compact('encuesta','questions'));
     }
 
     /**
@@ -54,7 +74,7 @@ class PollController extends Controller
      * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function edit(Genre $genre)
+    public function edit($id)
     {
         //
     }
@@ -66,7 +86,7 @@ class PollController extends Controller
      * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -77,7 +97,7 @@ class PollController extends Controller
      * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Genre $genre)
+    public function destroy($id)
     {
         //
     }

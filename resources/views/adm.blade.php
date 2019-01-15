@@ -90,6 +90,9 @@
                             </a>
                         </li>
                     </ul>
+                    <a class="nav-link" href="{{ route('encuesta.index') }}">
+                        <i class="nav-icon icon-puzzle"></i> Gestionar encuesta
+                    </a>
                 </li>
                 {{-- <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
