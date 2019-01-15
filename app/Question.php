@@ -19,4 +19,8 @@ class Question extends Model
     public function type(){
     	return $this->belongsTo(Type::class,'type_id');
     }
+
+    public function responseClient(){
+        return $this->hasOne(ResponseCLient::class,'question_id','id');
+    }
 }

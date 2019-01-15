@@ -7,6 +7,7 @@ use App\Content;
 use App\Genre;
 use DB;
 use App\Poll;
+use App\ResponseClient;
 use App\Http\Controllers\DefaultVariable;
 class HomeController extends Controller
 {
@@ -75,6 +76,22 @@ class HomeController extends Controller
     }
 
     public function pollSave(Request $request, $id){
-        dd($request);
+        // dd(Request()->ip());
+        // dd($request);
+        foreach ($request['rsp'] as $key => $value) {
+            if($value['type'] == 'radio'){
+                ResponseClient::create([
+                    'host' => Request()->ip(),
+                    'question_id' => $value['id'],
+                    'response_id' => $request[$key]
+                ]);
+            }else{
+                ResponseClient::create([
+                    'host' => Request()->ip(),
+                    'response' => $request[$key],
+                    'question_id' => $value['id']
+                ]);
+            }
+        }
     }
 }
