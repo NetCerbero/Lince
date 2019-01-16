@@ -68,6 +68,13 @@ class PollController extends Controller
         return view('Encuesta.show',compact('encuesta','questions'));
     }
 
+    public function showChart($id)
+    {
+        $encuesta = Poll::findOrFail($id);
+        $selects = $encuesta->questions()->where('type_id',1)->get();
+        $inputs = $encuesta->questions()->where('type_id',2)->get();
+        return view('Encuesta.chart',compact('encuesta','selects','inputs'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -76,7 +83,7 @@ class PollController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('Encuesta.edit');
     }
 
     /**
@@ -99,6 +106,6 @@ class PollController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Poll::findOrFail($id)->delete();
     }
 }

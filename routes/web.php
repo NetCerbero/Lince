@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/serie/data/set/{id}','ContentSerieController@setData')->name('serieDataUpdate');
     Route::resource('/other','OtherController');
     Route::resource('/encuesta','PollController');
+    Route::get('/encuesta/grafica/{id}','PollController@showChart')->name('showPoll');
 });
 
 Auth::routes();

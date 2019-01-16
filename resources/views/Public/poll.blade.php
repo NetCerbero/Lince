@@ -2,6 +2,7 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('vendors/steps/jquery.steps.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}">
 {{-- <link rel="stylesheet" href="http://www.jquery-steps.com/Content/Examples?v=oArYkice2OEJI0LuKioGJ4ayetiUonme8i983GzQqX41"> --}}
 <style>
 	.encuesta-pregunta{
@@ -12,7 +13,8 @@
 		background-color: #fff;
 	}
 	.wizard > .content{
-		height: 700px !important;
+		height: auto !important;
+		overflow: none;
 	}
 	.text-area{
 		width: 100%;
@@ -23,20 +25,24 @@
 		margin-bottom: 0 !important;
 		font-size: 14px !important;
 	}
+	.section-question{
+		height: auto !important;
+		position: relative !important;
+	}
 </style>
 @endsection
 
 @section('content')
 <div class="container">
-	<div>
-		titulo: {{ $encuesta->title }}
+	<div class="alert alert-info" role="alert">
+	  <strong>Nota:</strong> {{ $encuesta->message }}
 	</div>
 	<form id="form-encuesta-lince" action="{{ route('savePoll',$encuesta->id) }}">
 		@CSRF
 		@for ($i = 0; $i < count($questions); $i++)
 			@if ( $i % 4 == 0)
 				<h3>Sección</h3>
-				<section>
+				<section class="section-question">
 			@endif
 	    	@if ($questions[$i]->type['type'] == 'radio')
 	    		<input type="hidden" name="rsp[q_{{ $i }}][type]" value="{{ $questions[$i]->type['type'] }}">
@@ -74,17 +80,41 @@
 @section('script')
 <script src="{{ asset('vendors/validate/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('vendors/steps/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('vendors/sweetalert/sweetalert.min.js') }}"></script>
 <script>
 	var form = $("#form-encuesta-lince").show();
 	function savePoll(){
-		console.log("guardando");
-		let url = form.attr('action');
-		$.post(url,form.serialize(),function(rsp,status){
-			if(status == "success"){
-				alert("Submitted!");
-				console.log(rsp);
-			}
-		}).fail(e => console.log(e));
+		swal({
+	            title: "La encuesta será enviado a Lince",
+	            text: "las repuestas serán tomadas en cuenta para mejorar nuestros servicios",
+	            type: "info",
+	            showCancelButton: true,
+	            confirmButtonColor: "#1AB394",
+	            confirmButtonText: "!Si, Enviar!",
+	            cancelButtonText: "!No, Cancelar!",
+	            closeOnConfirm: false,
+	            closeOnCancel: false },
+		        function (isConfirm) {
+		            if (isConfirm) {
+		            	console.log("guardando");
+						let url = form.attr('action');
+						$.post(url,form.serialize(),function(rsp,status){
+							if(status == "success"){
+								swal({
+									title: "!Enviado!",
+									text: "Las respuestas se enviaron correctamente",
+									type: "success"},
+									function(confirm){
+										window.location.href = "{{ route('home') }}";
+									});
+							}
+						}).fail(e => {
+							swal("!Ha ocurrido un error!", "Vuelva a intentarlo de nuevo", "warning");
+						});
+		            } else {
+		                swal("Candelado", "No se enviaron las respuestas", "error");
+		            }
+		        });
 	}
 	form.steps({
 	    headerTag: "h3",

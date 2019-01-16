@@ -21,6 +21,6 @@ class Question extends Model
     }
 
     public function responseClient(){
-        return $this->hasOne(ResponseCLient::class,'question_id','id');
+        return $this->hasMany(ResponseCLient::class,'question_id','id');
     }
 }

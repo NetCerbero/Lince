@@ -57,7 +57,7 @@
 					<td>{{ $item->status }}</td>
 					<td>
 						<div class="d-flex justify-content-center">
-							<a href="#!" class="btn btn-outline-dark mr-1"><i class="fa fa-line-chart"></i></a>
+							<a href="{{ route('showPoll',$item->id) }}" class="btn btn-outline-dark mr-1"><i class="fa fa-line-chart"></i></a>
 							<a href="{{ route('encuesta.show',$item->id) }}" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
 							<a href="{{ route('encuesta.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
 							<a href="#!" class="btn btn-outline-danger eliminarRegistro" data-id="{{ $item->id }}" data-row="{{ $id }}"><i class="fa fa-trash"></i></a>
