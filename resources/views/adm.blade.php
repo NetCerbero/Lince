@@ -78,20 +78,23 @@
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="nav-icon icon-puzzle"></i> Gestionar contenido</a>
-                    <ul class="nav-dropdown-items">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contenido.index') }}">
-                                <i class="nav-icon icon-puzzle"></i> Otros
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('serie.index') }}">
-                                <i class="nav-icon icon-puzzle"></i> Series
-                            </a>
-                        </li>
-                    </ul>
+                      <ul class="nav-dropdown-items">
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ route('contenido.index') }}">
+                                  <i class="nav-icon icon-puzzle"></i> Otros
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ route('serie.index') }}">
+                                  <i class="nav-icon icon-puzzle"></i> Series
+                              </a>
+                          </li>
+                      </ul>
                     <a class="nav-link" href="{{ route('encuesta.index') }}">
                         <i class="nav-icon icon-puzzle"></i> Gestionar encuesta
+                    </a>
+                    <a class="nav-link" href="{{ route('publicidad.index') }}">
+                        <i class="nav-icon icon-puzzle"></i> Publicidad
                     </a>
                 </li>
                 {{-- <li class="nav-item nav-dropdown">
@@ -154,6 +157,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuario.index') }}">
                         <i class="nav-icon icon-puzzle"></i> Gestionar usuario
+                    </a>
+                    <a class="nav-link" href="{{ route('setting.index') }}">
+                        <i class="nav-icon icon-puzzle"></i> Configuración
                     </a>
                     {{-- <ul class="nav-dropdown-items">
                         <li class="nav-item">

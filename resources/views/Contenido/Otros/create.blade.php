@@ -30,7 +30,7 @@
 		<div class="row">
 			<div class="col-12 col-md-4">
         		<label>Portada</label><span class="status" id="file-status"></span>
-            	<input type="file" id="file-cover" name="file" class="dropify" data-height="320"/>
+            	<input type="file" id="file-cover" name="file" class="dropify" data-height="320" data-allowed-file-extensions="jpg jpeg png svg/>
 			</div>
 			<div class="col-12 col-md-8">
 				{{-- <div class="form-row col-12 pr-sm-0 m-0"> --}}

@@ -94,4 +94,9 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function searchContent($pattern){
+        $result = DB::table('contents')->selectRaw('name, type, cover')->where('name', 'like', "%$pattern%")->get();
+        return $result;
+    }
 }

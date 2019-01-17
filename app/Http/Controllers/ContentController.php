@@ -18,7 +18,7 @@ class ContentController extends Controller
      */
     public function index()
     {   
-        $videos = COntent::all()->whereNotIn('type',['4','5']);
+        $videos = Content::all()->whereNotIn('type',['4','5']);
         $pathDefault = DefaultVariable::pathCoverVideo;
         return view('Contenido.Otros.index',compact('videos','pathDefault'));
     }

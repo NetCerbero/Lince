@@ -23,6 +23,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/encuesta','PollController');
     Route::get('/encuesta/status/{id}','PollController@statusChange')->name('statusChange');
     Route::get('/encuesta/grafica/{id}','PollController@showChart')->name('showPoll');
+
+    Route::resource('/publicidad','AdvertisingController');
+    Route::get('/publicidad/status/{id}','AdvertisingController@statusChange')->name('statusChangeAds');
+    Route::resource('/setting','SettingController');
 });
 
 Auth::routes();
@@ -38,6 +42,7 @@ Route::get('/serie/{id}/season/{nSeason}/episode/{cap}/{name?}','PlayContentCont
 Route::get('/poll/{id}/realease','HomeController@pollActive')->name('doPoll');
 
 Route::post('/poll/{id}/response','HomeController@pollSave')->name('savePoll');
+Route::get('/search/content/{pattern}','HomeController@searchContent')->name('searchContent');
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';

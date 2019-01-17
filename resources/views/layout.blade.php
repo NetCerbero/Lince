@@ -73,6 +73,16 @@
         .encuesta-menu{
             width: 300px !important;
         }
+        .carousel{
+            height: 100%;
+        }
+        .carousel-inner{
+            height: 100%;
+        }
+        .carousel-inner img{
+            height: 100% !important;
+            width: 100% !important;
+        }
         @media (min-width: 576px) {
             .top-social-area a{
                 font-size: 48px;
@@ -149,6 +159,7 @@
                 height: 370px;
             }
         }
+
     </style>
     @yield('style')
 </head>
@@ -201,12 +212,15 @@
                     </div>
                     <!-- Top Social Area -->
                     <div class="col-12 col-sm-4">
+                        @php
+                            $setting = App\Setting::findOrFail(1);
+                        @endphp
                         <div class="top-social-area">
                             
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{{ $setting->facebook }}" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                            <a href="{{ $setting->instagram }}" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone={{ $setting->whatsapp }}" data-toggle="tooltip" data-placement="bottom" title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                             
                         </div>
                     </div>
@@ -217,9 +231,31 @@
         <!-- Logo Area -->
         <div class="logo-area text-center">
             <div class="container h-100">
-                <div class="row h-100 align-items-center">
+                {{-- <div class="row h-100 align-items-center">
                     <div class="col-12">
                         <a href="index.html" class="original-logo"><img src="img/core-img/logo.png" alt=""></a>
+                    </div>
+                </div> --}}
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                    @php
+                        $ads = App\Advertising::all()->where('status','t');
+                        $active = "active";
+                    @endphp
+                    <div class="carousel-inner">
+                        @foreach ($ads as $img)
+                            <div class="carousel-item {{ $active }}">
+                              <img class="d-block w-100" src="{{ Storage::url($img->path) }}" alt="First slide">
+                            </div>
+                            @php
+                                $active = "";
+                            @endphp
+                        @endforeach
+                        {{-- <div class="carousel-item">
+                          <img class="d-block w-100" src="..." alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                          <img class="d-block w-100" src="..." alt="Third slide">
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -324,7 +360,7 @@
         <!-- Instagram Slides -->
         <div class="instagram-slides owl-carousel">
             @php
-                $lastMovie = App\Content::all()->whereIn('type',[1,2,3])->sortByDesc('view')->take(12);
+                $lastMovie = App\Content::all()->whereIn('type',[1,2,4,5])->sortByDesc('view')->take(12);
             @endphp
             @foreach ($lastMovie as $item)
                 <div class="single-insta-feed">
@@ -335,7 +371,13 @@
                     @endif
                     <!-- Hover Effects -->
                     <div class="hover-effects">
-                        <a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
+                        @if ($item->type < 3)
+                            <a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
+                        @else
+                            <a href="{{ route('seasonSerie',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center">
+                                <i class="fa fa-play d-none"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
             @endforeach
@@ -350,21 +392,21 @@
                 <div class="col-8 col-md-6 px-0">
                     <div class="footer-info d-flex align-items-center">
                         <ul class="empresa-info size-text">
-                            <li><span class="mr-2"><i class="fa fa-map-marker px-2 px-sm-3"></i></span> <span class="pr-2 pr-md-4 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis unde dicta necessitatibus.</span></li>
-                            <li><span class="mr-2"><i class="fa fa-phone px-2 px-sm-3"></i></span> <span class="pr-2">(+591) 69554986</span></li>
-                            <li><span class="mr-2"><i class="fa fa-envelope-open px-2 px-sm-3"></i></span> <span class="pr-2" style="color: #01ceff;">empresa@lince.com</span></li>
+                            <li><span class="mr-2"><i class="fa fa-map-marker px-2 px-sm-3"></i></span> <span class="pr-2 pr-md-4 text-justify">{{ $setting->address }}</span></li>
+                            <li><span class="mr-2"><i class="fa fa-phone px-2 px-sm-3"></i></span> <span class="pr-2">{{ $setting->phone }}</span></li>
+                            <li><span class="mr-2"><i class="fa fa-envelope-open px-2 px-sm-3"></i></span> <span class="pr-2" style="color: #01ceff;">{{ $setting->email }}</span></li>
                         </ul> 
                     </div>
                 </div>
                 <div class="col-4 col-md-6 px-0">
                     <div class="footer-info d-flex d-md-block align-items-center justify-content-center p-md-2 px-lg-3">
                         <p class="pt-3 mb-1 text-white size-text d-none d-md-block">Sobre la compañia</p>
-                        <p class="text-justify about-company d-none d-md-block">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi similique voluptatem assumenda rerum architecto tempore laboriosam labore at repudiandae, ipsum itaque vitae officiis, hic, accusamus, aliquid distinctio enim aperiam asperiores. Ea quaerat quasi tenetur, vero recusandae, reiciendis itaque sed accusamus nostrum commodi tempore doloribus placeat vel facilis asperiores atque minus ut amet a temporibus? Odit consequuntur voluptates voluptate culpa itaque dicta reiciendis quas similique hic. Fugiat voluptate quasi aut cupiditate quia natus, dolores in temporibus obcaecati minus, tempora, ullam esse impedit. Minus distinctio necessitatibus officiis cupiditate doloribus facilis saepe cum voluptatibus fuga illum assumenda odio numquam, quaerat explicabo aliquam porro?</p>
+                        <p class="text-justify about-company d-none d-md-block">{{ $setting->about }}</p>
                         <div class="top-social-area">
-                            <a href="#" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="{{ $setting->facebook }}" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             
-                            <a href="#" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            <a href="#" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                            <a href="{{ $setting->instagram }}" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone={{ $setting->whatsapp }}" class="m-0" data-toggle="tooltip" data-placement="bottom" title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>

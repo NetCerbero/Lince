@@ -345,12 +345,12 @@ img {
           .header-area .top-header .top-social-area a {
             padding: 5px 4px; } }
   .header-area .logo-area {
-    height: 170px;
+    height: 320px;
     border-top: 1px solid #e1e1e1;
     border-bottom: 1px solid #e1e1e1; }
     @media only screen and (max-width: 767px) {
       .header-area .logo-area {
-        height: 100px; } }
+        height: 200px; } }
   .header-area .original-nav-area {
     height: 100px; }
     @media only screen and (max-width: 767px) {
