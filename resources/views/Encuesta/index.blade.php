@@ -41,6 +41,7 @@
         <thead>
             <tr>
 				<th>Título</th>
+				<th>Mensaje</th>
 				<th>Descripción</th>
 				<th>Estado</th>
 				<th>Acciones</th>
@@ -53,13 +54,20 @@
         	@foreach ($encuestas as $item)
         		<tr>
         			<td>{{ $item->title }}</td>
+        			<td>{{ $item->message }}</td>
 					<td>{{ $item->description }}</td>
-					<td>{{ $item->status }}</td>
+					<td>
+						@if ($item->status == 't')
+							<a href="{{ route('statusChange',$item->id) }}" data-toggle="tooltip" data-placement="top" title="Dele click para desactivarlo"><span class="badge badge-success">Activo</span></a>
+						@else
+							<a href="{{ route('statusChange',$item->id) }}" data-toggle="tooltip" data-placement="top" title="Dele click para activarlo"><span class="badge badge-dark">Desactivado</span></a>
+						@endif
+					</td>
 					<td>
 						<div class="d-flex justify-content-center">
 							<a href="{{ route('showPoll',$item->id) }}" class="btn btn-outline-dark mr-1"><i class="fa fa-line-chart"></i></a>
 							<a href="{{ route('encuesta.show',$item->id) }}" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
-							<a href="{{ route('encuesta.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
+							{{-- <a href="{{ route('encuesta.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a> --}}
 							<a href="#!" class="btn btn-outline-danger eliminarRegistro" data-id="{{ $item->id }}" data-row="{{ $id }}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
@@ -85,14 +93,16 @@
 <script src="{{ asset('vendors/toastr/toastr.js') }}"></script>
 <script src="{{ asset('js/util.js') }}"></script>
 <script>
-	var tag = null;
 	$(document).ready(function() {
-	    let dataTable = $('#multimedia').DataTable();
+		$(function () {
+			  $('[data-toggle="tooltip"]').tooltip();
+		});
+	    var dataTable = $('#multimedia').DataTable();
 		$('#multimedia').on( 'click', 'tbody tr .eliminarRegistro', function () {
-		  	let url = "{{ route('encuesta.destroy',':ID') }}";
-			let token = "{{ csrf_token() }}";
-		  	let id = $(this)[0].dataset.id;
-		  	let row = $(this)[0].dataset.row;
+		  	var url = "{{ route('encuesta.destroy',':ID') }}";
+			var token = "{{ csrf_token() }}";
+		  	var id = $(this)[0].dataset.id;
+		  	var row = $(this)[0].dataset.row;
 		  	url = url.replace(':ID',id);
 		  	console.log(url);
 		  	swal({

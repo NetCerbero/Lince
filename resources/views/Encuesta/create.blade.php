@@ -138,8 +138,8 @@
 	    });
 	});
 	function addField(){
-		let fields = $('#respuestasFormularioMultiples');
-		let hmtl = '<div><input type="text" class="mb-1 mr-1 field-class" name="respuesta" placeholder="Escriba la pregunta" required><i class="fa fa-trash" onclick="eliminarPreguntaModal(this)"></i></div>';
+		var fields = $('#respuestasFormularioMultiples');
+		var hmtl = '<div><input type="text" class="mb-1 mr-1 field-class" name="respuesta" placeholder="Escriba la pregunta" required><i class="fa fa-trash" onclick="eliminarPreguntaModal(this)"></i></div>';
 		fields.append(hmtl);
 	}
 	function eliminarPreguntaModal(e){
@@ -159,16 +159,16 @@
 	}
 	var id = 0;
 	function agregarTabla(){
-		let fm = $('#formularioModal');
+		var fm = $('#formularioModal');
 		if(fm[0].checkValidity()){
-			let nodes = fm[0].querySelectorAll('[name]');
-			let html = "";
-			let opt = "";
-			let tipo = "";
-			let q = "";
-			let rsp = "";
-			let sw = true;
-			for(let i = 0; i < nodes.length; i++){
+			var nodes = fm[0].querySelectorAll('[name]');
+			var html = "";
+			var opt = "";
+			var tipo = "";
+			var q = "";
+			var rsp = "";
+			var sw = true;
+			for(var i = 0; i < nodes.length; i++){
 				switch(nodes[i].name){
 					case 'tipo':
 						if(nodes[i].value == 1){
@@ -198,8 +198,8 @@
 				}
 			}
 			id++;
-			let celda = "";
-			for(let i = 0; i < tagTable.nCell - 1; i++){
+			var celda = "";
+			for(var i = 0; i < tagTable.nCell - 1; i++){
 				if( i == 0){
 					celda += tagTable.cell.replace(':DATA',html+q);
 				}else if(i == 1){

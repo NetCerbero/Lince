@@ -68,6 +68,17 @@ class PollController extends Controller
         return view('Encuesta.show',compact('encuesta','questions'));
     }
 
+    public function statusChange($id){
+        $poll = Poll::findOrFail($id);
+        if($poll->status == 't'){
+            $poll->status = 'f';
+        }else{
+            $poll->status = 't';
+        }
+        $poll->save();
+        return redirect()->route('encuesta.index');
+    }
+
     public function showChart($id)
     {
         $encuesta = Poll::findOrFail($id);

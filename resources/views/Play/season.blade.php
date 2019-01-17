@@ -40,14 +40,12 @@
       background-color: #17a2b8;
       color: white;
     }
-    .episode-container{
-        /*border-radius: 20px;*/
-    }
     .episode-season{
-        width: 100%;
         height: 170px;
+        width: 100%;
         overflow: hidden;
         border-radius: 20px;
+        padding: 5px;
     }
     .episode-season img{
         border-radius: 20px;
@@ -58,10 +56,23 @@
         /*border-radius: 20px;*/
         transform: scale(1.1);
     }
-    .episode-title{
+    .title-season{
+        text-align: center;
         position: absolute;
-        background: #251a1ab0;
-        color:white;
+        width: 100%;
+        top:23%;
+        color: white;
+        padding: 15px;
+        /*background: #ff5b5b;*/
+        /*background-color: #ff4e4e;*/
+        /*background-color: #000000e6;*/
+        /*background-color: rgba(0,0,0,0.78);*/
+        z-index: 10;
+        overflow: hidden;
+    }
+    .bg-black{
+        background-color: rgba(0,0,0,0.78);
+        padding: 2px;
     }
 </style>
 @endsection
@@ -230,18 +241,25 @@
     </div>
     <div class="row">
         @foreach ($allCap as $item)
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 episode-container px-2">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-0 episode-container">
                 <a href="{{ route('playSerie',['id'=> $content->id,'nSeason'=>$item['season'],'cap'=> $item['episode'],'name'=>$content->name]) }}">
-                    <div class="episode-season d-flex justify-content-center align-items-center">
-                        <img src="{{ Storage::url($content->cover) }}" alt="">
-                        @if ($item['episode'] == $cap)
-                            <div class="episode-title">
-                                <p class="text-center text-white mb-1">Estas aquí</p>
+                
+                    @if ($item['episode'] == $cap)
+                        <div class="title-season m-0">
+                            <div class="bg-black">
+                                <p class="text-center text-white mb-0">Estas aquí</p>
                                 <p class="text-center text-white mb-0">pasa al siguente capítulo</p>
                             </div>
-                        @endif
+                        </div>
+                        {{-- <div class="episode-title">
+                            <p class="text-center text-white mb-1">Estas aquí</p>
+                            <p class="text-center text-white mb-0">pasa al siguente capítulo</p>
+                        </div> --}}
+                    @endif
+                    <div class="episode-season">
+                        <img src="{{ Storage::url($content->cover) }}" alt="">
                     </div>
-                    <p class="text-center">Capítulo {{ $item['episode'] }}</p>                 
+                    <p class="text-center">Capítulo {{ $item['episode'] }}</p>
                 </a>
             </div>
         @endforeach

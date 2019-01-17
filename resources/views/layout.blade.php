@@ -11,9 +11,6 @@
     <!-- Title -->
     <title>Lince PLAY</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
-
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/classy-nav.css') }}">

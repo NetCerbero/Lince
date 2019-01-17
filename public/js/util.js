@@ -26,7 +26,7 @@ function eliminarRegistro(url, token){
 			toastr.success(' ', '¡Elimino correctamente el registro!');
 			console.log("eliminado con exito");
 		}
-    }).fail( e => {
+    }).fail( function(e) {
     	console.log(e.responseText);
     	toastr.error(' ', 'Ha ocurrido un error');
     });
@@ -38,7 +38,7 @@ function actualizarRegistro(url,token,data){
 		if(status == "success"){
 			toastr.success(' ', 'Se ha hecho cambios en el registro');
 		}
-    }).fail( e => {
+    }).fail( function(e) {
     	console.log(e.responseText);
     	toastr.error(' ', 'Ha ocurrido un error');
     });

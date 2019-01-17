@@ -28,7 +28,8 @@
 		color: #fff;
 	}
 	.movie-efecto:hover{
-		background-color: #050505c2;
+		/*background-color: #050505c2;*/
+		background-color: rgba(0,0,0,0.5);
         border-radius: 10px;
 	}
 	.title-movie{
@@ -36,6 +37,7 @@
 	    position: absolute;
 	    width: 100%;
 	    height: 3.2em;
+	    top:0px;
 	    color: white;
 	    display: flex;
 	    justify-content: center;
@@ -43,7 +45,8 @@
 	    padding: 5px;
 	    /*background: #ff5b5b;*/
 	    /*background-color: #ff4e4e;*/
-	    background-color: #000000e6;
+	    /*background-color: #000000e6;*/
+	    background-color: rgba(0,0,0,0.78);
 	    z-index: 10;
 	    overflow: hidden;
         border-radius: 10px 10px 0 0;

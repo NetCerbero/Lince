@@ -22,6 +22,13 @@
 	}
     .season{
         font-size: 20px;
+         margin-bottom: 5px;
+    }
+    .season-container{
+        text-align: center;
+    }
+    .season-container a:hover{
+        font-size: 20px !important;
     }
 </style>
 @endsection
@@ -29,7 +36,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-    	<div class="col-12 d-none d-lg-block col-lg-4">
+    	<div class="col-12 col-md-6 col-lg-4">
             @if($movie->cover)
                 <img class="play-cover" src="{{ Storage::url($movie->cover) }}" alt="">
             @else
@@ -65,17 +72,21 @@
             </div>
         <!-- ##### Sidebar Area ##### -->
     </div>
-    <div class="d-flex justify-content-center mt-3">
+    
         @if (count($temporadas))
-            @foreach ($temporadas as $tem)
-                <a href="{{ route('playSerie',['id'=>$movie->id,'nSeason'=> $tem->season,'cap'=> $tem->cap,'name'=>$movie->name]) }}" class="badge badge-dark season mr-1">Temporada {{ $tem->season }}</a>
-            @endforeach
+            <div class="season-container mt-3">
+                @foreach ($temporadas as $tem)
+                    <a href="{{ route('playSerie',['id'=>$movie->id,'nSeason'=> $tem->season,'cap'=> $tem->cap,'name'=>$movie->name]) }}" class="badge badge-dark season mr-1">Temporada {{ $tem->season }}</a>
+                @endforeach
+            </div>
         @else
+        <div class="d-flex justify-content-center mt-3">
             <div class="alert alert-info" role="alert">
               Aún no hay temporadas disponibles
             </div>
+         </div>
         @endif
-    </div>
+   
 </div>
 @endsection
 

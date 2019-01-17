@@ -87,7 +87,7 @@
 <script src="{{ asset('js/util.js') }}"></script>
 <script>
 	$(document).ready(function() {
-	    let dataTable = $('#multimedia').DataTable();
+	    var dataTable = $('#multimedia').DataTable();
 	    @if(session('info'))
 		    Push.create("Nuevo multimedia añadido", { //Titulo de la notificación
 				body: "{{ session('info')['name'] }}", //Texto del cuerpo de la notificación
@@ -102,9 +102,9 @@
 		@endif
 
 		$('#multimedia').on( 'click', 'tbody tr .eliminarRegistro', function () {
-		  	let url = "{{ route('contenido.destroy',':ID') }}";
-			let token = "{{ csrf_token() }}";
-		  	let row = $(this).parents('tr');
+		  	var url = "{{ route('contenido.destroy',':ID') }}";
+			var token = "{{ csrf_token() }}";
+		  	var row = $(this).parents('tr');
 		  	url = url.replace(':ID',row[0].dataset.id);
 		  	console.log(url);
 		  	swal({

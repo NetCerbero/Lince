@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('style')
-<link rel="stylesheet" href="{{ asset('vendors/steps/jquery.steps.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/steps/jquery.steps.css') }}" text="text/css">
+<link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}" text="text/css">
 {{-- <link rel="stylesheet" href="http://www.jquery-steps.com/Content/Examples?v=oArYkice2OEJI0LuKioGJ4ayetiUonme8i983GzQqX41"> --}}
 <style>
 	.encuesta-pregunta{
@@ -79,11 +79,10 @@
 @endsection
 @section('script')
 <script src="{{ asset('vendors/validate/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('vendors/steps/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('vendors/steps/jquery.steps.js') }}"></script>
 <script src="{{ asset('vendors/sweetalert/sweetalert.min.js') }}"></script>
 <script>
-	var form = $("#form-encuesta-lince").show();
-	function savePoll(){
+	function savePoll(form){
 		swal({
 	            title: "La encuesta será enviado a Lince",
 	            text: "las repuestas serán tomadas en cuenta para mejorar nuestros servicios",
@@ -97,7 +96,7 @@
 		        function (isConfirm) {
 		            if (isConfirm) {
 		            	console.log("guardando");
-						let url = form.attr('action');
+						var url = form.attr('action');
 						$.post(url,form.serialize(),function(rsp,status){
 							if(status == "success"){
 								swal({
@@ -108,7 +107,7 @@
 										window.location.href = "{{ route('home') }}";
 									});
 							}
-						}).fail(e => {
+						}).fail(function(e){
 							swal("!Ha ocurrido un error!", "Vuelva a intentarlo de nuevo", "warning");
 						});
 		            } else {
@@ -116,72 +115,75 @@
 		            }
 		        });
 	}
-	form.steps({
-	    headerTag: "h3",
-	    bodyTag: "section",
-	    transitionEffect: "slideLeft",
-	    onStepChanging: function (event, currentIndex, newIndex)
-	    {
-	        // Allways allow previous action even if the current form is not valid!
-	        if (currentIndex > newIndex)
-	        {
-	            return true;
-	        }
-	        // Forbid next action on "Warning" step if the user is to young
-	        if (newIndex === 3 && Number($("#age-2").val()) < 18)
-	        {
-	            return false;
-	        }
-	        // Needed in some cases if the user went back (clean up)
-	        if (currentIndex < newIndex)
-	        {
-	            // To remove error styles
-	            form.find(".body:eq(" + newIndex + ") label.error").remove();
-	            form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
-	        }
-	        form.validate().settings.ignore = ":disabled,:hidden";
-	        return form.valid();
-	    },
-	    onStepChanged: function (event, currentIndex, priorIndex)
-	    {
-	        // Used to skip the "Warning" step if the user is old enough.
-	        if (currentIndex === 2 && Number($("#age-2").val()) >= 18)
-	        {
-	            form.steps("next");
-	        }
-	        // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
-	        if (currentIndex === 2 && priorIndex === 3)
-	        {
-	            form.steps("previous");
-	        }
-	    },
-	    onFinishing: function (event, currentIndex)
-	    {
-	        form.validate().settings.ignore = ":disabled";
-	        return form.valid();
-	    },
-	    onFinished: function (event, currentIndex)
-	    {
-	        savePoll();
-	    },
-	    labels: {
-	        cancel: "Cancelar",
-	        current: "current step:",
-	        pagination: "Paginación",
-	        finish: "Finalizar",
-	        next: "Siguiente",
-	        previous: "Anterior",
-	        loading: "Cargando ..."
-	    }
-	}).validate({
-	    errorPlacement: function errorPlacement(error, element) {element.before(error);},
-	    rules: {
-	        @for ($j = 0; $j < $i ; $j++)
-	        	q_{{ $j }}:{
-		        	required: true
-		        },
-	        @endfor
-	    }
+	$(document).ready(function(){
+		var form = $("#form-encuesta-lince").show();
+		form.steps({
+		    headerTag: "h3",
+		    bodyTag: "section",
+		    transitionEffect: "slideLeft",
+		    onStepChanging: function (event, currentIndex, newIndex)
+		    {
+		        // Allways allow previous action even if the current form is not valid!
+		        if (currentIndex > newIndex)
+		        {
+		            return true;
+		        }
+		        // Forbid next action on "Warning" step if the user is to young
+		        if (newIndex === 3 && Number($("#age-2").val()) < 18)
+		        {
+		            return false;
+		        }
+		        // Needed in some cases if the user went back (clean up)
+		        if (currentIndex < newIndex)
+		        {
+		            // To remove error styles
+		            form.find(".body:eq(" + newIndex + ") label.error").remove();
+		            form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+		        }
+		        form.validate().settings.ignore = ":disabled,:hidden";
+		        return form.valid();
+		    },
+		    onStepChanged: function (event, currentIndex, priorIndex)
+		    {
+		        // Used to skip the "Warning" step if the user is old enough.
+		        if (currentIndex === 2 && Number($("#age-2").val()) >= 18)
+		        {
+		            form.steps("next");
+		        }
+		        // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
+		        if (currentIndex === 2 && priorIndex === 3)
+		        {
+		            form.steps("previous");
+		        }
+		    },
+		    onFinishing: function (event, currentIndex)
+		    {
+		        form.validate().settings.ignore = ":disabled";
+		        return form.valid();
+		    },
+		    onFinished: function (event, currentIndex)
+		    {
+		        savePoll(form);
+		    },
+		    labels: {
+		        cancel: "Cancelar",
+		        current: "current step:",
+		        pagination: "Paginación",
+		        finish: "Finalizar",
+		        next: "Siguiente",
+		        previous: "Anterior",
+		        loading: "Cargando ..."
+		    }
+		}).validate({
+		    errorPlacement: function errorPlacement(error, element) {element.before(error);},
+		    rules: {
+		        @for ($j = 0; $j < $i ; $j++)
+		        	q_{{ $j }}:{
+			        	required: true
+			        },
+		        @endfor
+		    }
+		});
 	});
 </script>
 @endsection
