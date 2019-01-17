@@ -28,7 +28,7 @@
 		<div class="row">
 			<div class="col-12 col-md-4">
         		<label>Foto de perfil</label>
-            	<input type="file" id="input-file-now-custom-2" name="file" class="dropify" data-height="250" data-allowed-file-extensions="jpg jpeg png svg/>
+            	<input type="file" id="input-file-now-custom-2" name="file" class="dropify" data-height="250" data-allowed-file-extensions="jpg jpeg png svg"/>
 			</div>
 			<div class="col-12 col-md-8">
 				<div class="form-group col-12 pr-sm-0">
