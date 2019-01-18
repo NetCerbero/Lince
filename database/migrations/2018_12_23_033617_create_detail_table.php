@@ -13,7 +13,7 @@ class CreateDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail', function (Blueprint $table) {
+        Schema::create('Detail', function (Blueprint $table) {
             $table->unsignedInteger('genre_id');
             $table->unsignedInteger('content_id');
             $table->foreign('genre_id')->references('id')->on('genres');
