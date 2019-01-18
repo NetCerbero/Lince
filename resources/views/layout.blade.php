@@ -594,7 +594,7 @@
         $(document).ready(function(){
             $('#search').on('input',function(e){
                 var value = this.value.trim();
-                if(value.length > 3 && value != pattern){
+                if(value.length >= 2 && value != pattern){
                     pattern = value;
                     buscarPattern(this.value);
                 }
