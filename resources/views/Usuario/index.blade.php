@@ -1,13 +1,10 @@
 @extends('adm')
 @section('style')
-{{-- <link href="{{ asset('vendors/DataTables/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('vendors/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') }}" rel="stylesheet" /> --}}
-{{-- <link rel="stylesheet" href="https://code.jquery.com/jquery-3.3.1.js"> --}}
+<link rel="stylesheet" href="{{ asset('vendors/cdn_datatable/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/cdn_datatable/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/sweetalert/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('vendors/toastr/toastr.css') }}">
 <style>
-	body{
-		/*font-size: 14px !important;*/
-		/*background-color: #e4e5e6 !important;*/
-	}
 	.breadcrumb{
 		background-color: #fff !important;
 	}
@@ -20,12 +17,6 @@
 		margin-bottom: 25px;
 	}
 </style>
-{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> --}}
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"> --}}
-<link rel="stylesheet" href="{{ asset('vendors/cdn_datatable/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/cdn_datatable/responsive.bootstrap4.min.css') }}">
-
-
 @endsection
 
 @section('title')
@@ -48,10 +39,13 @@
 			</tr>
         </thead>
         <tbody>
+        	@php
+        		$id = 0;
+        	@endphp
         	@foreach ($users as $item)
         		<tr>
         			@if ($item->photo)
-        				<td width="6%"><img src='{{ asset("/images/profile/$item->photo") }}' class="img-fluid" style="height: 35px; width: 100%;"/></td>
+        				<td width="6%"><img src='{{ Storage::url($item->photo) }}' class="img-fluid" style="height: 35px; width: 100%;"/></td>
         			@else
         				<td width="6%"><img src='{{ asset("/images/profile/default.png") }}' class="img-fluid" style="height: 35px; width: 100%;"/></td>
         			@endif
@@ -60,12 +54,14 @@
 					<td>{{ $item->email }}</td>
 					<td>
 						<div class="d-flex justify-content-center">
-							<a href="#" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
-							<a href="#" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
-							<a href="#" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+							<a href="{{ route('usuario.edit', $item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
+							<a href="#!" class="btn btn-outline-danger eliminarRegistro" data-id="{{ $item->id }}" data-row="{{ $id }}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
 				</tr>
+				@php
+					$id++;
+				@endphp
         	@endforeach
         </tbody>
     </table>
@@ -77,9 +73,39 @@
 <script src="{{ asset('vendors/cdn_datatable/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendors/cdn_datatable/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('vendors/cdn_datatable/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('vendors/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('vendors/toastr/toastr.js') }}"></script>
+<script src="{{ asset('js/util.js') }}"></script>
 <script>
 	$(document).ready(function() {
-	    $('#usuarios').DataTable();
+	    var dataTable = $('#usuarios').DataTable();
+	    $('#usuarios').on( 'click', 'tbody tr .eliminarRegistro', function () {
+		  	var url = "{{ route('usuario.destroy',':ID') }}";
+			var token = "{{ csrf_token() }}";
+		  	var id = $(this)[0].dataset.id;
+		  	var row = $(this)[0].dataset.row;
+		  	url = url.replace(':ID',id);
+		  	console.log(url);
+		  	swal({
+	            title: "¿Está seguro que desea eliminarlo?",
+	            text: "!No se podrá recuperar el registro despues de confirmar la acción!",
+	            type: "warning",
+	            showCancelButton: true,
+	            confirmButtonColor: "#DD6B55",
+	            confirmButtonText: "!Si, Eliminarlo!",
+	            cancelButtonText: "!No, Cancelar!",
+	            closeOnConfirm: false,
+	            closeOnCancel: false },
+		        function (isConfirm) {
+		            if (isConfirm) {
+		            	eliminarRegistro(url,token);
+		            	dataTable.row( row ).remove().draw();
+		                swal("Eliminado!", "El registro ha sido eliminado correctamente", "success");
+		            } else {
+		                swal("Candelado", "El registro se encuentra a salvo :)", "error");
+		            }
+		        });
+		} );
 	} );
 </script>
 @endsection

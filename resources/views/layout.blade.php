@@ -83,6 +83,18 @@
             height: 100% !important;
             width: 100% !important;
         }
+
+        .search-result{
+            display: none;
+            max-height: 500px;
+            overflow: auto;
+            position: absolute;
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid #151212;
+            background-color: #fff;
+        }
         @media (min-width: 576px) {
             .top-social-area a{
                 font-size: 48px;
@@ -159,7 +171,26 @@
                 height: 370px;
             }
         }
-
+        .query-item{
+            width: 50%;
+            float: left;
+            height: 200px;
+            overflow: hidden;
+            padding: 2px;
+        }
+        .query-item img{
+            height: 90% !important;
+            width: 100% !important;
+            border-radius: 10px;
+        }
+        .query-title{
+            width: 100%;
+            margin: 0px;
+            text-align: center;
+        }
+        .search-result a{
+            display: block !important;
+        }
     </style>
     @yield('style')
 </head>
@@ -318,12 +349,54 @@
                                 </ul>
 
                                 <!-- Search Form  -->
-                                <div id="search-wrapper">
-                                    <form action="#">
-                                        <input type="text" id="search" placeholder="Buscar...">
-                                        <div id="close-icon"></div>
-                                        <input class="d-none" type="submit" value="">
-                                    </form>
+                                <div class="container-search">
+                                    <div id="search-wrapper">
+                                        <form action="#">
+                                            <input type="text" id="search" placeholder="Buscar...">
+                                            <div id="close-icon"></div>
+                                            <input class="d-none" type="submit" value="">
+                                        </form>
+                                    </div>
+                                    <div class="search-result" id="result-query">
+                                        <a href="">
+                                            <div class="query-item">
+                                                <img src="{{ asset('images/movie/1.jpg') }}" alt="">
+                                                <p class="query-title">Titulo</p>
+                                            </div>
+                                        </a>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/1.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        {{-- <div class="query-item">
+                                            <img src="{{ asset('images/movie/10.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/11.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/12.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/2.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/3.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/7.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div>
+                                        <div class="query-item">
+                                            <img src="{{ asset('images/movie/1.jpg') }}" alt="">
+                                            <p class="query-title">Titulo</p>
+                                        </div> --}}
+                                    </div>
                                 </div>
                             </div>
                             <!-- Nav End -->
@@ -479,6 +552,62 @@
     <script src="{{ asset('js/plugins.js') }}"></script>
     <!-- Active js -->
     <script src="{{ asset('js/active.js') }}"></script>
+    <script>
+        var mov = "{{ route('playcontent',['id'=>':ID','name'=>':TITLE']) }}";
+        var ser = "{{ route('seasonSerie',['id'=>':ID','name'=>':TITLE']) }}";
+        var item = '<a href=":DIR"><div class="query-item"><img src=":COVER" alt=""><p class="query-title">:TITLE</p></div></a>';
+        function renderQuery(data){
+            var resultado = $('#result-query');
+            resultado.html('');
+            var medias= "";
+            for(var i = 0 ; i < data.length; i++){
+                var dir = "";
+                if( data[i].type > 3){
+                    dir = ser.replace(':ID',data[i].id);
+                    dir = dir.replace(':TITLE',data[i].name);
+                }else{
+                    dir = mov.replace(':ID',data[i].id);
+                    dir = dir.replace(':TITLE',data[i].name);
+                } 
+                var contenido = item.replace(':DIR',dir);
+                contenido = contenido.replace(':COVER','/storage'+data[i].cover.replace('public',''));
+                contenido = contenido.replace(':TITLE',data[i].name);
+                medias = medias + contenido;
+            }
+            resultado.append(medias);
+            resultado.css("display","block");
+        }
+        var pattern = "";
+        function buscarPattern(query){
+            // $('#result-query');
+            var url = "{{ route('searchContent',':QUERY') }}";
+            url = url.replace(':QUERY',query);
+            $.get(url,function(rsp, status){
+                if(status == "success"){
+                    console.log(rsp);
+                    if(rsp.length){
+                        renderQuery(rsp);
+                    }
+                }
+            });
+        }
+        $(document).ready(function(){
+            $('#search').on('input',function(e){
+                var value = this.value.trim();
+                if(value.length > 3 && value != pattern){
+                    pattern = value;
+                    buscarPattern(this.value);
+                }
+            });
+
+            $('#close-icon').click(function(){
+                $("#search").val("");
+                var clear = $('#result-query');
+                clear.html('');
+                clear.css("display","none");
+            });
+        });
+    </script>
     @yield('script')
 </body>
 

@@ -96,7 +96,7 @@ class HomeController extends Controller
     }
 
     public function searchContent($pattern){
-        $result = DB::table('contents')->selectRaw('name, type, cover')->where('name', 'like', "%$pattern%")->get();
+        $result = DB::table('contents')->selectRaw('id, name, type, cover')->whereIn('type',[1,2,4,5])->where('name', 'like', "%$pattern%")->get();
         return $result;
     }
 }

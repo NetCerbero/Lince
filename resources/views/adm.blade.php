@@ -42,7 +42,7 @@
     <li class="nav-item dropdown">
         <a class="nav-link nav-link pr-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             @if (Auth::user()->photo)
-                <img class="img-avatar" src="{{ asset('images/profile/').Auth()->photo }}" alt="profile.pjg">
+                <img class="img-avatar" src="{{ Storage::url(Auth::user()->photo) }}" alt="profile.pjg">
             @else
                 <img class="img-avatar" src="{{ asset('images/profile/default.png') }}" alt="profile.pjg">
             @endif
@@ -51,7 +51,7 @@
             <div class="dropdown-header text-center">
                 <strong>{{ Auth::user()->name }}</strong>
             </div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ route('usuario.edit',Auth::user()->id) }}">
                 <i class="fa fa-user"></i> Perfil
             </a>
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -68,12 +68,6 @@
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('panel.index') }}">
-                        <i class="nav-icon icon-speedometer"></i> Inicio
-                        {{-- <span class="badge badge-info">NEW</span> --}}
-                    </a>
-                </li>
                 <li class="nav-title">Utilidades</li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">

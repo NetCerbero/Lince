@@ -13,7 +13,7 @@ class PanelController extends Controller
      */
     public function index()
     {
-        return view('adm');
+        return redirect()->route('encuesta.index');
     }
 
     /**
