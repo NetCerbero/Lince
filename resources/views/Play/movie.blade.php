@@ -24,26 +24,6 @@
 @endsection
 
 @section('content')
-<!-- Single Blog Area  -->
-        {{-- <div class="single-blog-area blog-style-2 mb-50">
-            <div class="single-blog-thumbnail">
-			
-                <video poster="peliculas/recomendado/1.jpg" preload="metadata" controls tabindex="0" class="video-container"><source src="peliculas/recomendado/1.mp4" type="video/mp4">
-                Tu navegador no implementa el elemento <code>video</code>.
-                </video>
-                <div class="post-tag-content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="post-date">
-                                    <span>El precio de la codicia</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 <div class="container content-movie mb-4">
 	<nav>
 	  <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -168,7 +148,7 @@
                 <!-- Widget Area -->
                 <div class="sidebar-widget-area">
                     <h5 class="title">Promociones</h5>
-                    <a href="#"><img src="img/bg-img/promo.jpg" alt=""></a>
+                    {{-- <a href="#"><img src="img/bg-img/promo.jpg" alt=""></a> --}}
                 </div>
 
                 <!-- Widget Area -->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 class UsuarioController extends Controller
 {
@@ -36,11 +37,8 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         if ($request->hasFile('file')){
-            $image = $request->file('file');
-            $name = date("Ymd").'_'.time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('images/profile');
-            $image->move($destinationPath, $name);
-            $request['photo'] = $name;
+            $path = Storage::putFile('public/avatar', $request->file('file'));
+            $request['photo'] = $path;
         }
         $request['password'] = bcrypt($request['password']);
         User::create($request->all());
@@ -66,7 +64,8 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('Usuario.edit',compact('user'));
     }
 
     /**
@@ -78,7 +77,18 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->hasFile('file')){
+            $request['photo'] = Storage::putFile('public/avatar', $request->file('file'));
+        }
+        $user = User::findOrFail($id);
+        if($request['password'] != ""){
+            $request['password'] = bcrypt($request['password']);
+        }else{
+            $request['password'] = $user->password;
+        }
+
+        $user->update($request->all());
+        return redirect()->route('usuario.index');
     }
 
     /**
@@ -89,6 +99,6 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
     }
 }

@@ -1155,7 +1155,7 @@ textarea:focus ~ .highlight {
       padding: 7px 15px; }
       @media only screen and (min-width: 992px) and (max-width: 1199px) {
         #search-wrapper #search:focus {
-          width: 170px; } }
+          /*width: 170px;*/ } }
       @media only screen and (max-width: 767px) {
         #search-wrapper #search:focus {
           width: 200px; } }

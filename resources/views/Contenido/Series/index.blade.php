@@ -48,8 +48,11 @@
 			</tr>
         </thead>
         <tbody>
+        	@php
+        		$id = 0;
+        	@endphp
         	@foreach ($series as $item)
-        		<tr data-id='{{ $item->id }}'>
+        		<tr>
         			<td>{{ $item->name }}</td>
         			@if ($item->cover)
         				<td width="6%"><img src='{{ Storage::url($item->cover) }}' class="img-fluid" style="height: 35px; width: 100%;"/></td>
@@ -68,10 +71,13 @@
 							<a href="{{ route('uploadnotification',['id'=>$item->id,'type'=>'series']) }}" class="btn btn-outline-dark mr-1"><i class="fa fa-upload"></i></a>
 							<a href="{{ route('serie.show',$item->id) }}" class="btn btn-outline-info mr-1"><i class="fa fa-eye"></i></a>
 							<a href="{{ route('serie.edit',$item->id) }}" class="btn btn-outline-success mr-1"><i class="fa fa-edit"></i></a>
-							<a href="#!" class="btn btn-outline-danger eliminarRegistro" {{-- onclick="Eliminar(this)" --}}><i class="fa fa-trash"></i></a>
+							<a href="#!" class="btn btn-outline-danger eliminarRegistro" data-id="{{ $item->id }}" data-row="{{ $id }}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
 				</tr>
+				@php
+					$id++;
+				@endphp
         	@endforeach
         </tbody>
     </table>
@@ -84,6 +90,8 @@
 <script src="{{ asset('vendors/cdn_datatable/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('vendors/push/push.js') }}"></script>
 <script src="{{ asset('vendors/push/serviceWorker.min.js') }}"></script>
+<script src="{{ asset('vendors/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('vendors/toastr/toastr.js') }}"></script>
 <script src="{{ asset('js/util.js') }}"></script>
 <script>
 	$(document).ready(function() {
@@ -104,8 +112,9 @@
 		$('#multimedia').on( 'click', 'tbody tr .eliminarRegistro', function () {
 		  	var url = "{{ route('contenido.destroy',':ID') }}";
 			var token = "{{ csrf_token() }}";
-		  	var row = $(this).parents('tr');
-		  	url = url.replace(':ID',row[0].dataset.id);
+		  	var id = $(this)[0].dataset.id;
+		  	var row = $(this)[0].dataset.row;
+		  	url = url.replace(':ID', id);
 		  	console.log(url);
 		  	swal({
 	            title: "¿Está seguro que desea eliminarlo?",
