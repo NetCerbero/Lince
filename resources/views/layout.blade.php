@@ -194,7 +194,6 @@
     </style>
     @yield('style')
 </head>
-
 <body>
     <!-- Preloader -->
     <div id="preloader">
@@ -322,7 +321,7 @@
                                     <li class="menu-main"><a href="#">Peliculas</a>
                                         <ul class="dropdown">
                                             @php
-                                                $genres = App\Genre::all()->where('type',1);
+                                                $genres = DB::select('select * from genres where type = ? and id in (select genre_id from detail, contents where content_id = id and type = 1)',['1']);                                                
                                             @endphp
                                             @foreach ($genres as $item)
                                                 <li><a href="{{ route('movieGenre',['id'=>$item->id,'name'=>$item->name]) }}">{{ $item->name }}</a></li>
@@ -448,7 +447,7 @@
                             <a href="{{ route('playcontent',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center"><i class="fa fa-play"></i></a>
                         @else
                             <a href="{{ route('seasonSerie',['id'=>$item->id,'name'=>$item->name]) }}" class="d-flex align-items-center justify-content-center">
-                                <i class="fa fa-play d-none"></i>
+                                <i class="fa fa-play"></i>
                             </a>
                         @endif
                     </div>

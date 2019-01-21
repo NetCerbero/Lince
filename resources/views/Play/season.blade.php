@@ -18,7 +18,8 @@
 	}
 	.play-cover{
     	width: 100%;
-    	height: 100%
+    	/*height: 100%*/
+        min-height: 400px;
 	}
     .control-cap{
       text-decoration: none;
@@ -73,6 +74,11 @@
     .bg-black{
         background-color: rgba(0,0,0,0.78);
         padding: 2px;
+    }
+    .season-description{
+        max-height: 150px;
+        overflow: auto;
+        color: #9687a5;
     }
 </style>
 @endsection
@@ -173,15 +179,16 @@
         <!-- ##### Post Content Area ##### -->
         <div class="col-12 col-md-6 col-lg-6">
             <!-- Single Blog Area  -->
-            <div class="single-blog-area blog-style-2 mb-50">
+            <div class="single-blog-area blog-style-2 mb-2">
                 <!-- Blog Content -->
                 <div class="single-blog-content">
                     <div class="line"></div>
                         <a href="#" class="post-tag">SINOPSIS</a>
                         <h4><a href="#" class="post-headline mb-0">{{ $content->name }}</a></h4>
-                        
-                        <p>{{ $content->description }}
-                        	<br>
+                        <div class="season-description">
+                            {{ $content->description }}
+                        </div>
+                        <p>
                             Título: {{ $content->name }}<br>
                             Visto: {{ $content->view }}<br>
                             Idioma: {!! $language !!}<br>

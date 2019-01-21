@@ -57,7 +57,6 @@
 							<label>Título</label><span class="status" id="name-status"></span>
 							<input type="text" class="form-control" name="name" id="nombre-id" placeholder="Ingrese el nombre del contenido" data-validation="req len:0-255 regex:name" value="{{ $content->name }}" >
 						</div>
-						
 					{{-- </div> --}}
 					<div class="form-row col-12 pr-sm-0 m-0">
 						<div class="col-12 col-sm-4 px-0">
@@ -105,7 +104,7 @@
 					</div>
 					<div class="form-group col-12 pr-sm-0">
 						<label>Descripción</label><span class="status" id="description-status"></span>
-	                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-400">{{ $content->description }}</textarea>
+	                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-4000">{{ $content->description }}</textarea>
 					</div>
 				</div>
 			</div>

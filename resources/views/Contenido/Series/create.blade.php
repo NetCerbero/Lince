@@ -74,7 +74,7 @@
 				</div>
 				<div class="form-group col-12 pr-sm-0">
 					<label>Descripción</label><span class="status" id="description-status"></span>
-                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-400"></textarea>
+                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-4000"></textarea>
 				</div>
 			</div>
 		</div>
