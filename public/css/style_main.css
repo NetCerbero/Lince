@@ -350,7 +350,7 @@ img {
     border-bottom: 1px solid #e1e1e1; }
     @media only screen and (max-width: 767px) {
       .header-area .logo-area {
-        height: 200px; } }
+        height: 150px; } }
   .header-area .original-nav-area {
     height: 100px; }
     @media only screen and (max-width: 767px) {
