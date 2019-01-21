@@ -29,7 +29,6 @@
 	}
 </style>
 @endsection
-
 @section('title')
 <h5 class="text-muted font-weight-normal mb-0">Edición de contenido multimedia</h5>
 @endsection
@@ -111,7 +110,7 @@
 					</div>
 					<div class="form-group col-12 pr-sm-0">
 						<label>Descripción</label><span class="status" id="description-status"></span>
-	                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-400">{{ $content->description }}</textarea>
+	                	<textarea name="description" placeholder="Ingrese la descripción o sinopsis" data-validation="len:0-4000">{{ $content->description }}</textarea>
 					</div>
 				</div>
 			</div>

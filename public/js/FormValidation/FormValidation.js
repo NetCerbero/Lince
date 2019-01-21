@@ -75,7 +75,7 @@ function FormValidation(k) {
     }
     for (var t = {
                 letters: /^[a-zA-Z]*$/,
-                name: /^[a-zA-Z0-9 ñíóúáé\-']*$/i,
+                name: /^[a-zA-Z0-9 ñíóúáé:.\-']*$/i,
                 username: /^[a-zA-Z0-9_\.!?-]*$/,
                 numbers: /^[0-9]*$/,
                 phone: /^[0-9 \-+]*$/,

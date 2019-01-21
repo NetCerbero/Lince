@@ -20,6 +20,11 @@
     	width: 100%;
     	height: 100%
 	}
+	.movie-description{
+		max-height: 150px;
+		overflow: auto;
+		color: #9687a5;
+	}
 </style>
 @endsection
 
@@ -97,15 +102,16 @@
         <!-- ##### Post Content Area ##### -->
         <div class="col-12 col-md-6 col-lg-6">
             <!-- Single Blog Area  -->
-            <div class="single-blog-area blog-style-2 mb-50">
+            <div class="single-blog-area blog-style-2 mb-2">
                 <!-- Blog Content -->
                 <div class="single-blog-content">
                     <div class="line"></div>
                         <a href="#" class="post-tag">SINOPSIS</a>
                         <h4><a href="#" class="post-headline mb-0">{{ $movie->name }}</a></h4>
-                        
-                        <p>{{ $movie->description }}
-                        	<br>
+                        <div class="movie-description">
+                        	{{ $movie->description }}
+                        </div>
+                        <p>
                             Título: {{ $movie->name }}<br>
                             Visto: {{ $movie->view }}<br>
                             Idioma: {!! $language !!}<br>
