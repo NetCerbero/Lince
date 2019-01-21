@@ -191,6 +191,9 @@
         .search-result a{
             display: block !important;
         }
+        .carousel-item{
+            height: 100% !important;
+        }
     </style>
     @yield('style')
 </head>
