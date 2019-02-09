@@ -29,6 +29,6 @@ class CreateDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Detail');
+        Schema::dropIfExists('detail');
     }
 }
