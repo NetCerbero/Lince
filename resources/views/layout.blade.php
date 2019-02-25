@@ -335,7 +335,7 @@
                                     
                                     <li class="menu-main"><a href="{{ route('allseries') }}">Series</a></li>
                                     <li class="menu-main"><a href="{{ route('alldocumentary') }}">Documentales</a></li>
-                                    <li class="menu-main"><a href="#!">Musica</a></li>
+                                    <li class="menu-main"><a href="{{ route('allmusic') }}">Musica</a></li>
                                     @php
                                         $encuesta = App\Poll::all()->where('status','t');
                                     @endphp
