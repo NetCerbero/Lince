@@ -43,6 +43,9 @@ Route::get('/poll/{id}/realease','HomeController@pollActive')->name('doPoll');
 
 Route::post('/poll/{id}/response','HomeController@pollSave')->name('savePoll');
 Route::get('/search/content/{pattern}','HomeController@searchContent')->name('searchContent');
+
+Route::get('/music/all','HomeController@allMusic')->name('allmusic');
+Route::get('/music/{id}/play/{name?}','PlayContentController@playMusic')->name('playmusic');
 // 	$user = new App\User;
 // 	$user->name = 'Luis Yerko';
 // 	$user->lastname ='Laura Tola';

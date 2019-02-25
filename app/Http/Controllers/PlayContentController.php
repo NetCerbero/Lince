@@ -33,4 +33,17 @@ class PlayContentController extends Controller
         $default['movie'] = DefaultVariable::pathContentVideo;
         return view('Play.season',compact('capitulo','content','allCap','pnCap','nSeason','cap','default'));
     }
+
+     public function playMusic($id, $name=null){
+        $movie = Content::findOrFail($id);
+        if($movie->type === 3){
+            $movie->view = $movie->view + 1;
+            $movie->save();
+            $default['cover'] = DefaultVariable::pathCoverVideo;
+            $default['movie'] = DefaultVariable::pathContentVideo;
+            return view('Play.music',compact('movie','default'));
+        }else{
+            abort(404);
+        }
+    }
 }
