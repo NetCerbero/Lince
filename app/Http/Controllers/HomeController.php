@@ -99,4 +99,10 @@ class HomeController extends Controller
         $result = DB::table('contents')->selectRaw('id, name, type, cover')->whereIn('type',[1,2,4,5])->where('name', 'like', "%$pattern%")->get();
         return $result;
     }
+
+    public function allMusic(){
+        $title = "Todos los videos musicales";
+        $music = Content::where('type', 3)->orderBy('view','desc')->paginate(12);
+        return view('Public.allmusic',compact('music','title'));
+    }
 }
