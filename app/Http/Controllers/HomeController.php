@@ -36,25 +36,25 @@ class HomeController extends Controller
 
     public function allMovie(){
         $title = "Todas las películas";
-        $movies = Content::where('type', 1)->orderBy('view','desc')->paginate(12);
+        $movies = Content::where('type', 1)->orderBy('redate','desc')->paginate(12);
         return view('Public.allmovie',compact('movies','title'));
     }
 
     public function movieByGenre($id, $name=null){
         $genre = Genre::findOrFail($id);
-        $movies = $genre->contents()->whereIn('type',[1,2,3])->orderBy('view','desc')->paginate(12);
+        $movies = $genre->contents()->whereIn('type',[1])->orderBy('redate','desc')->paginate(12);
         $title = $genre->name;
         return view('Public.allmovie',compact('movies','title'));
     }
 
     public function allDocumentary(){
         $title = "Documentales";
-        $movies = Content::where('type', 2)->orderBy('view','desc')->paginate(12);
+        $movies = Content::where('type', 2)->orderBy('redate','desc')->paginate(12);
         return view('Public.allmovie',compact('movies','title'));
     }
 
     public function allSerie(){
-        $series = Content::whereIn('type',[4,5])->orderBy('view','desc')->paginate(12);
+        $series = Content::whereIn('type',[4,5])->orderBy('redate','desc')->paginate(12);
         $title = "Todas las series";
         return view('Public.allserie',compact('series','title'));
     }
@@ -97,7 +97,7 @@ class HomeController extends Controller
 
     public function searchContent($pattern){
         $result = DB::table('contents')->selectRaw('id, name, type, cover')->whereIn('type',[1,2,4,5])->where('name', 'like', "%$pattern%")->get();
-        return $result;
+        return ["result" => $result, "default" => DefaultVariable::pathCoverVideo];
     }
 
     public function allMusic(){
