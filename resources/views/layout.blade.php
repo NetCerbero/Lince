@@ -558,7 +558,7 @@
         var mov = "{{ route('playcontent',['id'=>':ID','name'=>':TITLE']) }}";
         var ser = "{{ route('seasonSerie',['id'=>':ID','name'=>':TITLE']) }}";
         var item = '<a href=":DIR"><div class="query-item"><img src=":COVER" alt=""><p class="query-title">:TITLE</p></div></a>';
-        function renderQuery(data){
+        function renderQuery(data, defaultData){
             var resultado = $('#result-query');
             resultado.html('');
             var medias= "";
@@ -572,7 +572,12 @@
                     dir = dir.replace(':TITLE',data[i].name);
                 } 
                 var contenido = item.replace(':DIR',dir);
-                contenido = contenido.replace(':COVER','/storage'+data[i].cover.replace('public',''));
+                if(data[i].cover){
+                    contenido = contenido.replace(':COVER','/storage'+data[i].cover.replace('public',''));
+                }else{
+                    contenido = contenido.replace(':COVER','/storage'+defaultData.replace('public',''));
+                }
+                
                 contenido = contenido.replace(':TITLE',data[i].name);
                 medias = medias + contenido;
             }
@@ -587,8 +592,8 @@
             $.get(url,function(rsp, status){
                 if(status == "success"){
                     console.log(rsp);
-                    if(rsp.length){
-                        renderQuery(rsp);
+                    if(rsp.result.length){
+                        renderQuery(rsp.result, rsp.default);
                     }
                 }
             });

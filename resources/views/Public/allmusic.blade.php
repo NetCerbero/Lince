@@ -7,7 +7,7 @@
 		overflow: hidden;
         border-radius: 10px;
 	}
-	.last-movie img{
+	.last-movie img, .last-movie video{
 		height: 100%;
 		width: 100%;
 	}
@@ -95,9 +95,11 @@
 	        			{{ $item->name }}
 	        		</p>
 	        		<div class="last-movie">
-	                    @if ($item->others)
+	                    @if (count($item->others))
 	                        {{-- <img src="{{ Storage::url($item->cover) }}" alt="">  --}}
-	                        <video src="{{ Storage::url($item->others[0]->path) }}"></video>
+	                        <video>
+	                        	<source src="{{ Storage::url($item->others[0]->path) }}#t=1" type="video/mp4">                       	
+	                        </video>
 	                    @else
 	                        <img src="{{ Storage::url($item->defaultVariable()['cover']) }}" alt="">
 	                    @endif
