@@ -21,7 +21,7 @@ class GenreTableSeeder extends Seeder
     	Genre::create(['type'=>1,'name'=>'Suspenso']);
     	Genre::create(['type'=>1,'name'=>'Histórico']);
     	Genre::create(['type'=>1,'name'=>'Musical']);
-    	Genre::create(['type'=>1,'name'=>'Animación']);
+    	Genre::create(['type'=>1,'name'=>'Infantil']);
     	Genre::create(['type'=>1,'name'=>'Intriga']);
     	Genre::create(['type'=>1,'name'=>'Bélico']);
     	//Música
